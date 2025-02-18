@@ -1,0 +1,22 @@
+# First time setting up MkDocs?
+
+Make sure you have python  installed, and available from your command line/terminal (you may need to add python to your PATH.)
+https://www.python.org/downloads/
+
+Then install the requirements file in this directory. Modify the path below as required (i.e. where your terminal is)
+`pip install -r /path/to/requirements.txt`
+
+The mkdocs commands below require your terminal to be in in this directory (i.e. tc-robot/docs/robo_connect_mkdocs).
+
+## Commands
+* `mkdocs new [dir-name]` - Create a new project.
+* `mkdocs serve` - Start the live-reloading docs server.
+* `mkdocs build` - Build the documentation site.
+* `mkdocs -h` - Print help message and exit.
+
+## Project layout
+
+    mkdocs.yml    # The configuration file.
+    docs/
+        index.md  # The documentation homepage.
+        ...       # Other markdown pages, images and other files.

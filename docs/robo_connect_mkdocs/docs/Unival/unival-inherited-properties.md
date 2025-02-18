@@ -1,0 +1,1 @@
+The values that are required by the interface are stored in the axes group and then status which is a data type that contains status variables of the robot status. 

@@ -1,0 +1,1 @@
+The UnivalPLC is a solution provided by Staubli for controlling 4 and 6 axis robots. The comunication is based off of EtherCAT comunication. An internal data type is passed from the PLC layer to the Robot to set and get data. The robot is added an object in the IO of the PLC with it's own XML file desribing the avaiable PDO. The two data types are then linked to the io object. 
