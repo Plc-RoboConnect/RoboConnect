@@ -1,0 +1,2745 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/Dobot/dobot_robo_connect_Objects/">
+      
+      
+        <link rel="prev" href="../dobot_command_list/">
+      
+      
+        <link rel="next" href="../Dobot_Command_Constructor/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
+    
+    
+      
+        <title>RoboConnect Objects - RoboConnect</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="stylesheets/extra.css" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#roboconnect-objects" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="RoboConnect" class="md-header__button md-logo" aria-label="RoboConnect" data-md-component="logo">
+      
+  <img src="../../logo/robot 1.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RoboConnect
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              RoboConnect Objects
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="stylesheets/extra.css" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="stylesheets/extra.css" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/squidfunk/mkdocs-material" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RoboConnect Library
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting_started/" class="md-tabs__link">
+          
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../robo_connect_I_RoboConnect/" class="md-tabs__link">
+          
+  
+  RoboConnect
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../robo_connect_connect/" class="md-tabs__link">
+          
+  
+  RoboConnect Components
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../dobot_set_connection_params/" class="md-tabs__link">
+          
+  
+  Dobot Implementation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Unival/unival-connection/" class="md-tabs__link">
+          
+  
+  Unival Implementation
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="RoboConnect" class="md-nav__button md-logo" aria-label="RoboConnect" data-md-component="logo">
+      
+  <img src="../../logo/robot 1.png" alt="logo">
+
+    </a>
+    RoboConnect
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/squidfunk/mkdocs-material" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    RoboConnect Library
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exampleProject/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Example Project
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design_guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Design Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../robo_connect_library/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RoboConnect Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    RoboConnect
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            RoboConnect
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../robo_connect_I_RoboConnect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    I_RoboConnect
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../robo_connect-testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unit Tests
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    RoboConnect Components
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            RoboConnect Components
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../robo_connect_connect/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Connect
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../robo_connect_Command%20Queue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CommandQueue
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../robo_connect_Command%20Strategy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CommandStrategy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../robo_connect_TcpConnection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TcpConnection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Dobot Implementation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Dobot Implementation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dobot_set_connection_params/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dobot Setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dobot_command_list/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command List
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    RoboConnect Objects
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    RoboConnect Objects
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connect
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cycliclogic" class="md-nav__link">
+    <span class="md-ellipsis">
+      CyclicLogic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CyclicLogic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#init" class="md-nav__link">
+    <span class="md-ellipsis">
+      INIT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idle" class="md-nav__link">
+    <span class="md-ellipsis">
+      IDLE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connecting" class="md-nav__link">
+    <span class="md-ellipsis">
+      CONNECTING
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      READY
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disconnecting" class="md-nav__link">
+    <span class="md-ellipsis">
+      DISCONNECTING
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error_state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error_state
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cyclicreadfeedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      CyclicReadFeedback
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disconnect" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disconnect
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#halt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Halt
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jogcartesian" class="md-nav__link">
+    <span class="md-ellipsis">
+      JogCartesian
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jogjointaxis" class="md-nav__link">
+    <span class="md-ellipsis">
+      JogJointAxis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#moveabs" class="md-nav__link">
+    <span class="md-ellipsis">
+      MoveABS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#movej" class="md-nav__link">
+    <span class="md-ellipsis">
+      MoveJ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reset
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statechanged" class="md-nav__link">
+    <span class="md-ellipsis">
+      StateChanged
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stop
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Properties
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#busy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Busy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connected" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#done" class="md-nav__link">
+    <span class="md-ellipsis">
+      Done
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enabled" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enabled
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#errorid" class="md-nav__link">
+    <span class="md-ellipsis">
+      ErrorID
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#position" class="md-nav__link">
+    <span class="md-ellipsis">
+      Position
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      ToolPosition
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gets
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getanalogoutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetAnalogOutput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getaxiscurrents" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetAxisCurrents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getaxispositions" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetAxisPositions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getaxistemperatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetAxisTemperatures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getdigitaloutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetDigitalOutput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gettoolanalogoutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetToolAnalogOutput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gettooldigitaloutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetToolDigitalOutput
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sets
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setanalogoutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetAnalogOutput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setbuffermode" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetBufferMode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setcartesianacceleration" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetCartesianAcceleration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setcartesiandynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetCartesianDynamics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setcartesianspeed" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetCartesianSpeed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setconnectionproperties" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetConnectionProperties
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setdigitaloutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetDigitalOutput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setjogtype" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetJogType
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setjointacceleration" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetJointAcceleration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setjointspeed" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetJointSpeed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setnumberofaxis" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetNumberOfAxis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settoolanalogoutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetToolAnalogOutput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settooldigitaloutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetToolDigitalOutput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settoolframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetToolFrame
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settransitionmode" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetTransitionMode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settransitionparameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetTransitionParameter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setuserframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetUserFrame
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Dobot_Command_Constructor/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command Constructor
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Unival Implementation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Unival Implementation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Unival/unival-connection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Connect to Unival
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Unival/unival-inherited-properties/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inherited Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connect
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cycliclogic" class="md-nav__link">
+    <span class="md-ellipsis">
+      CyclicLogic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CyclicLogic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#init" class="md-nav__link">
+    <span class="md-ellipsis">
+      INIT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idle" class="md-nav__link">
+    <span class="md-ellipsis">
+      IDLE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connecting" class="md-nav__link">
+    <span class="md-ellipsis">
+      CONNECTING
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      READY
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disconnecting" class="md-nav__link">
+    <span class="md-ellipsis">
+      DISCONNECTING
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error_state" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error_state
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cyclicreadfeedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      CyclicReadFeedback
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disconnect" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disconnect
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#halt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Halt
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jogcartesian" class="md-nav__link">
+    <span class="md-ellipsis">
+      JogCartesian
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jogjointaxis" class="md-nav__link">
+    <span class="md-ellipsis">
+      JogJointAxis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#moveabs" class="md-nav__link">
+    <span class="md-ellipsis">
+      MoveABS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#movej" class="md-nav__link">
+    <span class="md-ellipsis">
+      MoveJ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reset
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statechanged" class="md-nav__link">
+    <span class="md-ellipsis">
+      StateChanged
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stop
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Properties
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#busy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Busy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connected" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#done" class="md-nav__link">
+    <span class="md-ellipsis">
+      Done
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enabled" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enabled
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#errorid" class="md-nav__link">
+    <span class="md-ellipsis">
+      ErrorID
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#position" class="md-nav__link">
+    <span class="md-ellipsis">
+      Position
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      ToolPosition
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gets
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getanalogoutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetAnalogOutput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getaxiscurrents" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetAxisCurrents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getaxispositions" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetAxisPositions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getaxistemperatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetAxisTemperatures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getdigitaloutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetDigitalOutput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gettoolanalogoutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetToolAnalogOutput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gettooldigitaloutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetToolDigitalOutput
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sets
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setanalogoutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetAnalogOutput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setbuffermode" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetBufferMode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setcartesianacceleration" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetCartesianAcceleration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setcartesiandynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetCartesianDynamics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setcartesianspeed" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetCartesianSpeed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setconnectionproperties" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetConnectionProperties
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setdigitaloutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetDigitalOutput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setjogtype" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetJogType
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setjointacceleration" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetJointAcceleration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setjointspeed" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetJointSpeed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setnumberofaxis" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetNumberOfAxis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settoolanalogoutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetToolAnalogOutput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settooldigitaloutput" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetToolDigitalOutput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settoolframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetToolFrame
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settransitionmode" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetTransitionMode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settransitionparameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetTransitionParameter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setuserframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      SetUserFrame
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="roboconnect-objects">RoboConnect Objects</h1>
+<p>This details the proccess of combining giving methods to the objects detailed in RoboConnect. They key object to this is the command constructor. </p>
+<h2 id="methods"><strong>Methods</strong></h2>
+<h3 id="connect"><strong>Connect</strong></h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Methods/connect.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Connect Code" src="../images/ObjectExamples/Methods/connect.png" /></a> <BR>
+This method moves the state in the CyclicLogic method from "INIT" TO "CONNECTING" which establishes the TCPIP ports. </p>
+<h3 id="cycliclogic"><strong>CyclicLogic</strong></h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Methods/CyclicLogic.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img Loading="lazy" align="none," alt="CyclicLogic code" src="../images/ObjectExamples/Methods/CyclicLogic.png" /></a> <br>
+This method is called every cycle and contains a case statement. This case has six states:</p>
+<ol>
+<li>INIT</li>
+<li>IDLE</li>
+<li>CONNECTING</li>
+<li>READY</li>
+<li>DISCONNECTING</li>
+<li>ERROR_STATE</li>
+</ol>
+<h4 id="init"><strong>INIT</strong></h4>
+<p>This state upon the first cycle will move to IDLE. </p>
+<h4 id="idle"><strong>IDLE</strong></h4>
+<p>Waiting for the connect method however until this is called the case will remain in this state. </p>
+<h4 id="connecting"><strong>CONNECTING</strong></h4>
+<p>On line 18 there is a check if the the state has changed if this is true the three TCPIP ports are set to connect. The time out of the connection is set globally and defaults at 45 seconds (In testing a 5 second time out meant that the connection never suceeded). Before moving onto the next case the connection needs to be tested. Each of the ports is of type T_ConnectionTCPIP which has a property of IsConnected this is inspected on line 28. Moving onto the ready state can only happen when all three ports are connected.</p>
+<h4 id="ready"><strong>READY</strong></h4>
+<p>This is the running state the robot is ready to receive commands and the feedback is read. That is what line 34 does, this is a call that receives in the 1440 bytes of feedback from the realtime feedback port. </p>
+<h4 id="disconnecting"><strong>DISCONNECTING</strong></h4>
+<p>The if statement on line 37 checks for a change of state then if that returns true each of the ports established in CONNECTING are called to disconnect. Line 43 checks if each of the connections are disconnected before moving to IDLe ready for a connect method call against the robot. </p>
+<h4 id="error_state"><strong>Error_state</strong></h4>
+<p>This state isn't used.</p>
+<h3 id="cyclicreadfeedback"><strong>CyclicReadFeedback</strong></h3>
+<h3 id="disable"><strong>Disable</strong></h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Methods/Disable.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Disable Code" src="../images/ObjectExamples/Methods/Disable.png" /></a><br>
+The statement in the if statement populates the variable "commandString" with the string to disable the robot "DisableRobot()". The method returns true if it is successful so if it fails the method T_DobotCR3.Disable returns false as the command wasn't successful. Line 5 retreves a task from the task pool and assigns it to the variable "ThisTask". Line 9 populates the task with the target port for the command and the command string payload. line 10 adds the task to the command queue with a normal priority as this is a standard command. Then the method is set to true.</p>
+<h3 id="disconnect"><strong>Disconnect</strong></h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Methods/Disconnect.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Disconnect Code" src="../images/ObjectExamples/Methods/Disconnect.png" /></a><br>
+This method moves the state in the CyclicLogic method from "READY" TO "DISCONNECTING" which disconnects the TCPIP ports. </p>
+<h3 id="enable"><strong>Enable</strong></h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Methods/Enable.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Enable Code" src="../images/ObjectExamples/Methods/Enable.png" /></a><br>
+Using the commandConstructor populate the command string with the correct TCPIP string to enable the robot "EnableRobot()". Then gets the next available task from the task list.<br> Line 10 inialises the task with the correct tcpip port and string.<br>Line 11 adds the task to the command queue with normal priority.<br> Line 12 sets the method to true. </p>
+<h3 id="halt"><strong>Halt</strong></h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Methods/Halt.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Halt Code" src="../images/ObjectExamples/Methods/Halt.png" /></a><br>
+There is no halt command in the Dobot command however the pause() command best meets what halt would do. "Pause the motion commands that are not delivered by project (generally, the motion commands delivered by TCP), without clearing the motion queue.". Taken from the Dobot_TCP_IP documentation. <br></p>
+<h3 id="jogcartesian"><strong>JogCartesian</strong></h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Methods/JogCartesian.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Jog Cartesian code" src="../images/ObjectExamples/Methods/JogCartesian.png" /></a><br>
+JogCartesian takes in two inputs "AxisIndex" which is an interger value and "AxisDirection" which is a boolean True for positive movement then false for negative movement. You can use the DUT targetJogAxis to input the integer or just the raw int. </p>
+<p><a class="glightbox" href="../images/ObjectExamples/Methods/TargetJogAxis.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="TargetJogAxis" src="../images/ObjectExamples/Methods/TargetJogAxis.png" /></a> <br></p>
+<p>This method checks against the CartesianDynamics of the robot which holds what cartesian axes a robot can move along. This prevents a robot that doesn't have 6 degrees of freedom from being jogged in an axis that isn't possible. <br></p>
+<p>Line 34 assembles the command string using the command constructor if this is unsuccessful then the method returns false. <br>
+Line 39 get's the next task from the task pool if GetTask returns false then JogCartesian is false and the method returns. <br>
+Line 44 packs the task with the port the command should go to for this instance it is the motion port as defined in the Dobot documentation. <br>
+Line 45 Adds the task to the normal priority queue. <br>
+Line 46 returns the method as true.<br></p>
+<h3 id="jogjointaxis"><strong>JogJointAxis</strong></h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Methods/JogJointAxis.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="JogJointAxis code" src="../images/ObjectExamples/Methods/JogJointAxis.png" /></a><br>
+Similar to the JogCartesian method however this is focused on jogging a specific joint, on initalisation the number of Axis is defined. The method takes two inputs "AxisIndex" the target axis number if you want to stop jogging the input is 0. Then the second input is "AxisDirection" that is a boolean true is a positive movement and false is a negative direction of movement. <br>
+Line 1 if statement checks that the AxisIndex is within bounds of the robot's axes. <br>
+Line 2 assembles the command string using the command constructor if this is unsuccessful then the method returns false. <br>
+Line 6 get's the next task from the task pool if GetTask returns false then JogCartesian is false and the method returns. <br>
+Line 10 packs the task with the port the command should go to for this instance it is the motion port as defined in the Dobot documentation. <br>
+Line 11 Adds the task to the normal priority queue. <br>
+Line 12 returns the method as true.<br></p>
+<h3 id="moveabs"><strong>MoveABS</strong></h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Methods/MoveABS.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="MoveABS code" src="../images/ObjectExamples/Methods/MoveABS.png" /></a><br>
+An input of a cartesian point detailing the target point in space for the robot to move toward. <br>
+<a class="glightbox" href="../images/ObjectExamples/ST_CartesianPoint.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Cartesian Point" src="../images/ObjectExamples/ST_CartesianPoint.png" /></a> <br>
+Line 1 uses commandConstructor to assemble the command string from "point". 
+Line 12 get's the next task from the task pool if GetTask returns false then moveABS is false and the method returns. <br>
+Line 16 packs the task with the port the command should go to for this instance it is the motion port as defined in the Dobot documentation. <br>
+Line 17 Adds the task to the normal priority queue. <br>
+Line 18 returns the method as true.<br></p>
+<h3 id="movej"><strong>MoveJ</strong></h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Methods/MoveJ.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="MoveJ code" src="../images/ObjectExamples/Methods/MoveJ.png" /></a><br>
+MoveJ takes an input of an array of lreal representing the target joint angles for the robot. <br>
+Line 1 uses commandConstructor to assemble the command string from "joints". 
+Line 12 get's the next task from the task pool if GetTask returns false then Movej is false and the method returns. <br>
+Line 16 packs the task with the port the command should go to for this instance it is the motion port as defined in the Dobot documentation. <br>
+Line 17 Adds the task to the normal priority queue. <br>
+Line 18 returns the method as true.<br></p>
+<h3 id="reset"><strong>Reset</strong></h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Methods/Reset.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Reset Code" src="../images/ObjectExamples/Methods/Reset.png" /></a><br>
+Line 1 uses commandConstructor to assemble the command string. 
+Line 5 get's the next task from the task pool if GetTask returns false then Reset is false and the method returns. <br>
+Line 9 packs the task with the port the command should go to for this instance it is the dashboard port as defined in the Dobot documentation. <br>
+Line 10 Adds the task to the normal priority queue. <br>
+Line 11 returns the method as true.<br></p>
+<h3 id="statechanged">StateChanged</h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Methods/StateChanged.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="StateChanged code" src="../images/ObjectExamples/Methods/StateChanged.png" /></a><br>
+StateChanged uses two states initalised in the CR3 function block specically "Sate" &amp; "prevState" checking if the states changed. The method goes true and the prevState becomes the state. </p>
+<h3 id="stop">Stop</h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Methods/Stop.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Stop Code" src="../images/ObjectExamples/Methods/Stop.png" /></a><br>
+Line 1 uses commandConstructor to assemble the command string. 
+Line 5 get's the next task from the task pool if GetTask returns false then Reset is false and the method returns. <br>
+Line 9 packs the task with the port the command should go to for this instance it is the dashboard port as defined in the Dobot documentation. <br>
+Line 10 Adds the task to the high priority queue. <br>
+Line 11 returns the method as true.<br></p>
+<h2 id="properties"><strong>Properties</strong></h2>
+<p>The majority of the properties are read through realtimefeedback port detailed in the Dobot TCP/IP Remote Control Interface Guide. </p>
+<h3 id="busy"><strong>Busy</strong></h3>
+<p>Busy is a boolean. <br>
+<a class="glightbox" href="../images/ObjectExamples/Properties/Busy.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Busy.Get" src="../images/ObjectExamples/Properties/Busy.png" /></a><br>
+The running status flag is asigned to the value of the busy property.<br></p>
+<h3 id="connected"><strong>Connected</strong></h3>
+<p>Connected is a boolean. <br>
+<a class="glightbox" href="../images/ObjectExamples/Properties/Connected.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Connected.Get" src="../images/ObjectExamples/Properties/Connected.png" /></a><br>
+Connected reads the is connected properties on the three TCP/IP ports if they are all true then all three of the ports are connected then the robot is connected. However if one of these ports are not connected the robot is classified as not connected. <br></p>
+<h3 id="done"><strong>Done</strong></h3>
+<p>Done is a boolean. <br>
+<a class="glightbox" href="../images/ObjectExamples/Properties/Done.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Done.Get" src="../images/ObjectExamples/Properties/Done.png" /></a><br>
+In the TCP/IP documents there is no done command however if the robot isn't running then it is done. So for done is the inverse of the runningstatus. </p>
+<h3 id="enabled"><strong>Enabled</strong></h3>
+<p>Enabled is a boolean. <br>
+<a class="glightbox" href="../images/ObjectExamples/Properties/Enabled.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Enabled.Get" src="../images/ObjectExamples/Properties/Enabled.png" /></a><br>
+There is an enabled status on the feedback port for the robot, this is the value given to the enabled property. <br></p>
+<h3 id="error"><strong>Error</strong></h3>
+<p>Error is a boolean. <br>
+<a class="glightbox" href="../images/ObjectExamples/Properties/Error.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Error.Get" src="../images/ObjectExamples/Properties/Error.png" /></a><br>
+There is an error flag on the feedback port so that is the value given to the Error property. </p>
+<h3 id="errorid"><strong>ErrorID</strong></h3>
+<p>ErrorID is a lreal. <br>
+There is an error code that is provided as an echo to a command string however currently not fed back to this property. </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Error Code</th>
+<th style="text-align: center;">Description</th>
+<th style="text-align: center;">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">No error</td>
+<td style="text-align: center;">Deliver successfully</td>
+</tr>
+<tr>
+<td style="text-align: center;">-1</td>
+<td style="text-align: center;">Failed to get</td>
+<td style="text-align: center;">Failed to receive or execute</td>
+</tr>
+<tr>
+<td style="text-align: center;">-10000</td>
+<td style="text-align: center;">Command Error</td>
+<td style="text-align: center;">The command does not exist</td>
+</tr>
+<tr>
+<td style="text-align: center;">-20000</td>
+<td style="text-align: center;">Parameter number error</td>
+<td style="text-align: center;">The number of parameters in the command is incorrect.</td>
+</tr>
+<tr>
+<td style="text-align: center;">-30001</td>
+<td style="text-align: center;">The type of the first parameter is incorrect.</td>
+<td style="text-align: center;">-30000 indicates that the parameter type is incorrect. The last bit 1 indicates that the type of the first parameter is incorrect</td>
+</tr>
+<tr>
+<td style="text-align: center;">-40001</td>
+<td style="text-align: center;">The range of the first parameter is incorrect</td>
+<td style="text-align: center;">-40000 indicates the parameter range is incorrect. The last bit 1 indicates that the range of the first parameter is in correct.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="position"><strong>Position</strong></h3>
+<p>Position is type ST_CartesianPoint.<br>
+<a class="glightbox" href="../images/ObjectExamples/ST_CartesianPoint.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Cartesian Point" src="../images/ObjectExamples/ST_CartesianPoint.png" /></a>
+<a class="glightbox" href="../images/ObjectExamples/Properties/PositionGet.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Position.Get" src="../images/ObjectExamples/Properties/PositionGet.png" /></a><br>
+QActual represents the actual joint position of the robot </p>
+<h3 id="toolposition"><strong>ToolPosition</strong></h3>
+<p>ToolPosition is type ST_CartesianPoint.<br>
+<a class="glightbox" href="../images/ObjectExamples/ST_CartesianPoint.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Cartesian Point" src="../images/ObjectExamples/ST_CartesianPoint.png" /></a>
+<a class="glightbox" href="../images/ObjectExamples/Properties/ToolPosition.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="ToolPosition.Get" src="../images/ObjectExamples/Properties/ToolPosition.png" /></a><br>
+ToolVectorActual represents the Tool Center Point (TCP) actual Cartesian coordinates. The method aligns the raw array of values to indexable cartesian axes. </p>
+<h2 id="gets"><strong>Gets</strong></h2>
+<h3 id="getanalogoutput"><strong>GetAnalogOutput</strong></h3>
+<h3 id="getaxiscurrents"><strong>GetAxisCurrents</strong></h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Gets/GetAxisCurrents.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="GetAxisCurrents" src="../images/ObjectExamples/Gets/GetAxisCurrents.png" /></a><br>
+"Values" is a unkown length of the array as this allows for various robots with a wide spectrum of joints. This method access the Iactual values from the realtime feedback port, the for loop indexes through the array and populates the "Values" array with currents of the joints.</p>
+<h3 id="getaxispositions"><strong>GetAxisPositions</strong></h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Gets/GetAxisPositions.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="GetAxisPositions" src="../images/ObjectExamples/Gets/GetAxisPositions.png" /></a><br>
+"Values" is a unkown length of the array as this allows for various robots with a wide spectrum of joints. This method access the QActual values from the realtime feedback port, the for loop indexes through the array and poplates the "Values" array with the joint positional values. </p>
+<h3 id="getaxistemperatures"><strong>GetAxisTemperatures</strong></h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Gets/GetAxisTemperatures.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="GetAxisTemperatures" src="../images/ObjectExamples/Gets/GetAxisTemperatures.png" /></a><br>
+"Values" is a unkown length of the array as this allows for various robots with a wide spectrum of joints. This method access the MotorTemperatures values from the realtime feedback port, the for loop indexes through the array and poplates the "Values" array with the temperature of the axis.</p>
+<h3 id="getdigitaloutput"><strong>GetDigitalOutput</strong></h3>
+<p><a class="glightbox" href="../images/ObjectExamples/Gets/GetDigitalOutput.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="GetDigitalOutput" src="../images/ObjectExamples/Gets/GetDigitalOutput.png" /></a><br>
+Using the "index" which response to the target digital output for return. The target value is given value thorugh the realTimeFeedback port and the variable DigitalOutput with the index. </p>
+<h3 id="gettoolanalogoutput"><strong>GetToolAnalogOutput</strong></h3>
+<h3 id="gettooldigitaloutput"><strong>GetToolDigitalOutput</strong></h3>
+<h2 id="sets"><strong>Sets</strong></h2>
+<h3 id="setanalogoutput"><strong>SetAnalogOutput</strong></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Input Variable</th>
+<th style="text-align: center;">Data Type</th>
+<th style="text-align: center;">Representative value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Index</td>
+<td style="text-align: center;">UINT</td>
+<td style="text-align: center;">Target output terminal</td>
+</tr>
+<tr>
+<td style="text-align: center;">Value</td>
+<td style="text-align: center;">LREAL</td>
+<td style="text-align: center;">Value of target output terminal</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" href="../images/ObjectExamples/Sets/SetAnalogOutput.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="SetAnalogOutput" src="../images/ObjectExamples/Sets/SetAnalogOutput.png" /></a><br></p>
+<p>The if statement on line 1 populates the commandOutput with the correct string using the commandConstructor. <br>
+Line 5 populates the task with a task that is available from the task pool. <br>
+Line 9 initalises the task with the dashboard port and the command string. <br>
+Line 10 adds the task with normal priority to the command Queue. <br>
+Line 11 sets the Method true. <br></p>
+<h3 id="setbuffermode"><strong>SetBufferMode</strong></h3>
+<h3 id="setcartesianacceleration"><strong>SetCartesianAcceleration</strong></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Input Variable</th>
+<th style="text-align: center;">Data Type</th>
+<th style="text-align: center;">Representative value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Acceleration</td>
+<td style="text-align: center;">LREAL</td>
+<td style="text-align: center;">The acceleration ratio with the range 1 to 100</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" href="../images/ObjectExamples/Sets/SetCartesianAcceleration.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="SetCartesianAcceleration" src="../images/ObjectExamples/Sets/SetCartesianAcceleration.png" /></a><br></p>
+<p>Line 1 populates the command string with the correct string for setting the cartesian acceleration. Due to the interface specificying an LREAL there is a type conversion between LREAL to INT. <br>
+Line 5 populates the task with a task that is available from the task pool. <br>
+Line 9 initalises the task with the dashboard port and the command string. <br>
+Line 10 adds the task with normal priority to the command Queue. <br>
+Line 11 sets the Method true. <br></p>
+<h3 id="setcartesiandynamics"><strong>SetCartesianDynamics</strong></h3>
+<p>This method is part of the robot set up, it defines how the robot can move in cartesian space. It can restrict the jog movement by setting one of the dynamics to false. </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Input Variable</th>
+<th style="text-align: center;">Data Type</th>
+<th style="text-align: center;">Representative value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">XDynamics</td>
+<td style="text-align: center;">BOOL</td>
+<td style="text-align: center;">If the robot can move in the X axis</td>
+</tr>
+<tr>
+<td style="text-align: center;">YDynamics</td>
+<td style="text-align: center;">BOOL</td>
+<td style="text-align: center;">If the robot can move in the Y axis</td>
+</tr>
+<tr>
+<td style="text-align: center;">ZDynamics</td>
+<td style="text-align: center;">BOOL</td>
+<td style="text-align: center;">If the robot can move in the Z axis</td>
+</tr>
+<tr>
+<td style="text-align: center;">ADynamics</td>
+<td style="text-align: center;">BOOL</td>
+<td style="text-align: center;">If the robot can move in the A axis</td>
+</tr>
+<tr>
+<td style="text-align: center;">BDynamics</td>
+<td style="text-align: center;">BOOL</td>
+<td style="text-align: center;">If the robot can move in the B axis</td>
+</tr>
+<tr>
+<td style="text-align: center;">CDynamics</td>
+<td style="text-align: center;">BOOL</td>
+<td style="text-align: center;">If the robot can move in the C axis</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" href="../images/ObjectExamples/Sets/SetCartesianDynamics.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="SetCartesianDynamics" src="../images/ObjectExamples/Sets/SetCartesianDynamics.png" /></a><br></p>
+<p>Line 1 creates a copy of how the cartesian dynamics was before the dynamics are set. This is used to check if dynamics have been set from the default <br>
+Lines 2 to 37 inspects each variable input and sets the dynamics of the robot, if a dynamics is true then the cartesian point is set to 1 and visa versa. <br>
+Lines 38 to 46 uses the "orginalCartesianDynamics" to check if they match then the do then robot isn't inisalised as the robot can't move on any axis. 
+If the condition of the line 38 is true, sets the method to be true and marks that the CartesianDynamicsInitalisation to true. <br></p>
+<h3 id="setcartesianspeed"><strong>SetCartesianSpeed</strong></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Input Variable</th>
+<th style="text-align: center;">Data Type</th>
+<th style="text-align: center;">Representative value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Speed</td>
+<td style="text-align: center;">LREAL</td>
+<td style="text-align: center;">The speed ratio with the range 1 to 100</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" href="../images/ObjectExamples/Sets/SetCartesianSpeed.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="SetCartesianSpeed" src="../images/ObjectExamples/Sets/SetCartesianSpeed.png" /></a><br>
+Line 1 populates the command string with the correct string for setting the cartesian speed. Due to the interface specificying an LREAL there is a type conversion between LREAL to INT. <br>
+Line 5 populates the task with a task that is available from the task pool. <br>
+Line 9 initalises the task with the dashboard port and the command string. <br>
+Line 10 adds the task with normal priority to the command Queue. <br>
+Line 11 sets the Method true. <br></p>
+<h3 id="setconnectionproperties"><strong>SetConnectionProperties</strong></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Input Variable</th>
+<th style="text-align: center;">Data Type</th>
+<th style="text-align: center;">Representative value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">IP</td>
+<td style="text-align: center;">T_MaxString</td>
+<td style="text-align: center;">The ip address of the robotic controller.</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" href="../images/ObjectExamples/Sets/SetConnectionProperties.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="SetConnectionProperties" src="../images/ObjectExamples/Sets/SetConnectionProperties.png" /></a><br>
+Sets the Ip address of the robot within the object, this "_IP" and it is used in the "connect" method. </p>
+<h3 id="setdigitaloutput"><strong>SetDigitalOutput</strong></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Input Variable</th>
+<th style="text-align: center;">Data Type</th>
+<th style="text-align: center;">Representative value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Index</td>
+<td style="text-align: center;">UINT</td>
+<td style="text-align: center;">Target output terminal</td>
+</tr>
+<tr>
+<td style="text-align: center;">Value</td>
+<td style="text-align: center;">BOOL</td>
+<td style="text-align: center;">Value of target output terminal</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" href="../images/ObjectExamples/Sets/SetDigitalOutput.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="SetDigitalOutput" src="../images/ObjectExamples/Sets/SetDigitalOutput.png" /></a><br></p>
+<p>The if statement on line 1 populates the commandOutput with the correct string using the commandConstructor. <br>
+Line 5 populates the task with a task that is available from the task pool. <br>
+Line 9 initalises the task with the dashboard port and the command string. <br>
+Line 10 adds the task with normal priority to the command Queue. <br>
+Line 11 sets the Method true. <br></p>
+<h3 id="setjogtype"><strong>SetJogType</strong></h3>
+<h3 id="setjointacceleration"><strong>SetJointAcceleration</strong></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Input Variable</th>
+<th style="text-align: center;">Data Type</th>
+<th style="text-align: center;">Representative value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Acceleration</td>
+<td style="text-align: center;">LREAL</td>
+<td style="text-align: center;">The acceleration ratio with the range 1 to 100</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" href="../images/ObjectExamples/Sets/SetJointAcceleration.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="SetJointAcceleration" src="../images/ObjectExamples/Sets/SetJointAcceleration.png" /></a><br></p>
+<p>Line 1 populates the command string with the correct string for setting the joint acceleration. Due to the interface specificying an LREAL there is a type conversion between LREAL to INT. <br>
+Line 5 populates the task with a task that is available from the task pool. <br>
+Line 9 initalises the task with the dashboard port and the command string. <br>
+Line 10 adds the task with normal priority to the command Queue. <br>
+Line 11 sets the Method true. <br></p>
+<h3 id="setjointspeed"><strong>SetJointSpeed</strong></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Input Variable</th>
+<th style="text-align: center;">Data Type</th>
+<th style="text-align: center;">Representative value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Acceleration</td>
+<td style="text-align: center;">LREAL</td>
+<td style="text-align: center;">The acceleration ratio with the range 1 to 100</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" href="../images/ObjectExamples/Sets/SetJointSpeed.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="SetJointSpeed" src="../images/ObjectExamples/Sets/SetJointSpeed.png" /></a><br>
+Line 1 populates the command string with the correct string for setting the joint speed. Due to the interface specificying an LREAL there is a type conversion between LREAL to INT. <br>
+Line 5 populates the task with a task that is available from the task pool. <br>
+Line 9 initalises the task with the dashboard port and the command string. <br>
+Line 10 adds the task with normal priority to the command Queue. <br>
+Line 11 sets the Method true. <br></p>
+<h3 id="setnumberofaxis"><strong>SetNumberOfAxis</strong></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Input Variable</th>
+<th style="text-align: center;">Data Type</th>
+<th style="text-align: center;">Representative value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">NumberOfAxisOfMovement</td>
+<td style="text-align: center;">UDINT</td>
+<td style="text-align: center;">Number of axis of movement that the robotic system has.</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" href="../images/ObjectExamples/Sets/SetNumberOfAxis.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="SetNumberOfAxis" src="../images/ObjectExamples/Sets/SetNumberOfAxis.png" /></a><br></p>
+<p>This method checks if the robot is initalised, if the robot is not initalised then this method sets the number of axes on the robot. This method also sets the "NumberOfAxisInitalisation" to true. Then sets the method to true. </p>
+<h3 id="settoolanalogoutput"><strong>SetToolAnalogOutput</strong></h3>
+<h3 id="settooldigitaloutput"><strong>SetToolDigitalOutput</strong></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Input Variable</th>
+<th style="text-align: center;">Data Type</th>
+<th style="text-align: center;">Representative value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Index</td>
+<td style="text-align: center;">UINT</td>
+<td style="text-align: center;">Target output terminal</td>
+</tr>
+<tr>
+<td style="text-align: center;">Value</td>
+<td style="text-align: center;">BOOL</td>
+<td style="text-align: center;">Value of target output terminal</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" href="../images/ObjectExamples/Sets/SetToolDigitalOutput.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="SetToolDigitalOutput" src="../images/ObjectExamples/Sets/SetToolDigitalOutput.png" /></a><br></p>
+<p>The if statement on line 1 populates the commandOutput with the correct string using the commandConstructor. Due to the interface specificying an BOOL for value there is a type conversion between BOOL to INT.  <br>
+Line 5 populates the task with a task that is available from the task pool. <br>
+Line 9 initalises the task with the dashboard port and the command string. <br>
+Line 10 adds the task with normal priority to the command Queue. <br>
+Line 11 sets the Method true. <br></p>
+<h3 id="settoolframe"><strong>SetToolFrame</strong></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Input Variable</th>
+<th style="text-align: center;">Data Type</th>
+<th style="text-align: center;">Representative value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Frame</td>
+<td style="text-align: center;">RoboConnect.ST_CartesianPoint</td>
+<td style="text-align: center;">This data type holds all the cartesian points x,y,c,a,b,c</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" href="../images/ObjectExamples/Sets/SetToolFrame.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="SetToolFrame" src="../images/ObjectExamples/Sets/SetToolFrame.png" /></a><br></p>
+<p>Lines 1 to 6 populates the "TableString" with the vaules of the tool frame from the input "Frame". Using the populated table string line 7 populates the command output with the desired string. The index always remains 1 as any stored tool frames can be stored in PLC code for application such as tool changes. <br>
+Line 7 populates the task with a task that is available from the task pool. <br>
+Line 15 initalises the task with the dashboard port and the command string. <br>
+Line 16 adds the task with normal priority to the command Queue. <br>
+Line 17 sets the Method true. <br></p>
+<h3 id="settransitionmode"><strong>SetTransitionMode</strong></h3>
+<h3 id="settransitionparameter"><strong>SetTransitionParameter</strong></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Input Variable</th>
+<th style="text-align: center;">Data Type</th>
+<th style="text-align: center;">Representative value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">CPratio</td>
+<td style="text-align: center;">LREAL</td>
+<td style="text-align: center;">The ratio of how accurate the robot path will be when passing through an intermediate point. [1 to 100]</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" href="../images/ObjectExamples/Sets/SetTransitionParameter.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="SetTransitionParameter" src="../images/ObjectExamples/Sets/SetTransitionParameter.png" /></a><br></p>
+<p>Line 1 Check if the cpRatio is within the bounds of the accepted range, if it is then the method continues.
+Line 2 populates the command string with the correct command string using the commandConstructor.
+Line 6 populates the task with a task that is available from the task pool. <br>
+Line 10 initalises the task with the dashboard port and the command string. <br>
+Line 11 adds the task with normal priority to the command Queue. <br>
+Line 12 sets the Method true. <br></p>
+<h3 id="setuserframe"><strong>SetUserFrame</strong></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Input Variable</th>
+<th style="text-align: center;">Data Type</th>
+<th style="text-align: center;">Representative value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Frame</td>
+<td style="text-align: center;">RoboConnect.ST_CartesianPoint</td>
+<td style="text-align: center;">This data type holds all the cartesian points x,y,c,a,b,c</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" href="../images/ObjectExamples/Sets/SetUserFrame.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="SetUserFrame" src="../images/ObjectExamples/Sets/SetUserFrame.png" /></a><br></p>
+<p>Lines 1 to 6 populates the "TableString" with the vaules of the tool frame from the input "Frame". Using the populated table string line 7 populates the command output with the desired string. The index always remains 1 as any stored tool frames can be stored in PLC code for application such as tool changes. <br>
+Line 7 populates the task with a task that is available from the task pool. <br>
+Line 15 initalises the task with the dashboard port and the command string. <br>
+Line 16 adds the task with normal priority to the command Queue. <br>
+Line 17 sets the Method true. <br></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.path", "navigation.top", "search.suggest", "search.highlight", "search.share"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f1b6f286.min.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
+</html>
