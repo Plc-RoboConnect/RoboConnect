@@ -1,0 +1,937 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_MockTcRobot" Id="{201056d0-98c2-4ff9-b470-1c80ccf83dde}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_MockRoboConnect IMPLEMENTS I_RoboConnect
+VAR_INPUT
+  _error, _isBusy, _isDone, _isEnabled : BOOL;
+  _errorId : UINT;
+  _axisCount : UINT;
+  _position, _toolPosition : ST_CartesianPoint;
+END_VAR
+VAR
+  state, prevState : (INIT,
+    IDLE,
+    READY,
+    ERROR_STATE) := INIT;
+
+  initalised : BOOL;
+  connectionTimer : TON;
+  tasktimer : TON;
+  _connection : I_Connection;
+  _commandQueue : I_CommandQueue;
+  _commandTask : T_MockCommandTask;
+  _boolCommandTask : T_MockBoolCommandTask;
+  _numberCommandTask : T_MockNumberCommandTask;
+
+  digitalOutputs : ARRAY[1..DIGITAL_OUTPUT_COUNT] OF BOOL;
+  digitalIntputs : ARRAY[1..DIGITAL_INPUT_COUNT] OF BOOL;
+  analogOutputs : ARRAY[1..ANALOG_OUTPUT_COUNT] OF LREAL;
+  analogIntputs : ARRAY[1..ANALOG_INPUT_COUNT] OF LREAL;
+
+  toolDigitalOutputs : ARRAY[1..TOOL_DIGITAL_OUTPUT] OF BOOL;
+  toolDigitalIntputs : ARRAY[1..TOOL_DIGITAL_INPUT] OF BOOL;
+  toolAnalogOutputs : ARRAY[1..TOOL_ANALOG_INPUT] OF LREAL;
+  toolAnalogIntputs : ARRAY[1..TOOL_ANALOG_OUTPUT] OF LREAL;
+
+  axes : ARRAY[1..AXIS_COUNT] OF LREAL;
+
+END_VAR
+VAR CONSTANT
+  DIGITAL_OUTPUT_COUNT : UINT := 6;
+  DIGITAL_INPUT_COUNT : UINT := 6;
+  ANALOG_INPUT_COUNT : UINT := 6;
+  ANALOG_OUTPUT_COUNT : UINT := 6;
+  TOOL_ANALOG_OUTPUT : UINT := 2;
+  TOOL_DIGITAL_OUTPUT : UINT := 2;
+  TOOL_ANALOG_INPUT : UINT := 2;
+  TOOL_DIGITAL_INPUT : UINT := 2;
+  AXIS_COUNT : UINT := 6;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+
+]]></ST>
+    </Implementation>
+    <Folder Name="Methods" Id="{633a559d-0be4-494e-b564-dfbde4c320fd}" />
+    <Folder Name="MockSetup Methods" Id="{6663e216-8a27-0428-0e05-3423509a4f3d}" />
+    <Folder Name="Properties" Id="{439c51c2-74ab-420d-a2ce-c5c3c04fd93e}" />
+    <Property Name="Busy" Id="{be087c2b-05e3-4b2b-9cd2-e6c0fd449973}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Busy : BOOL]]></Declaration>
+      <Get Name="Get" Id="{f9b28191-c884-4748-ad02-67f19cd6df5e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="CartesianPosition" Id="{7ad9454c-f24d-41c7-a977-f0d5ba108681}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY CartesianPosition : TcRobot.ST_CartesianPoint
+]]></Declaration>
+      <Get Name="Get" Id="{3cabd2f2-3f58-42e5-81b1-95d14c25f156}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ClearError" Id="{8a001a36-ca9f-4d28-b7f6-458e76a98629}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD ClearError : BOOL
+VAR_OUTPUT
+	task	: TcRobot.I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Connect" Id="{52902f6d-f80f-48b4-9f6a-82181fc37f94}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Connect : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[connectionTimer( IN := FALSE );
+connectionTimer( IN := TRUE );]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Connected" Id="{ee21ccfd-ba7b-4f6a-bed3-758d5b62f035}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Connected : BOOL]]></Declaration>
+      <Get Name="Get" Id="{4c45a3ef-8fb0-4369-9427-31f87248cd96}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Connected := connectionTimer.Q;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="CyclicLogic" Id="{c3fd3be3-ccd9-4e33-b12c-93d2902836d6}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD CyclicLogic
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[connectionTimer();
+taskTimer();
+
+IF taskTimer.Q THEN
+  _commandTask(_Timeout := TRUE);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Disable" Id="{4cfdcbd7-25fa-486d-85c1-d89c75300fb4}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Disable : BOOL
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+VAR
+  resultTask : T_CommandTask;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT connectionTimer.Q THEN
+  task := resultTask;
+  RETURN;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Disconnect" Id="{8ecd6e57-49e1-43b3-9652-a1b288dd9406}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Disconnect : BOOL
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[connectionTimer( IN := FALSE );]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Done" Id="{7d88ea25-3f3a-4514-9ad2-cae4e11952a8}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Done : BOOL]]></Declaration>
+      <Get Name="Get" Id="{69a1b751-1458-4825-91cc-b9dcc818c159}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Enable" Id="{34b8f714-1bc9-4d3d-a330-ff89ad98408e}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Enable : BOOL
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Enabled" Id="{fc0fc101-25a6-454b-bdc3-3f7e326f2a26}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Enabled : BOOL]]></Declaration>
+      <Get Name="Get" Id="{1ba6c64f-b764-4ed1-9ce3-08a066388529}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Error" Id="{c9dc4358-c962-4b68-bb6b-6600ddb8f5df}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Error : BOOL]]></Declaration>
+      <Get Name="Get" Id="{7f2055a5-d2dc-4571-a026-3c146bb3f237}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ErrorID" Id="{08d3ebdb-b083-44b2-87cf-732b45b21f29}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY ErrorID : LREAL]]></Declaration>
+      <Get Name="Get" Id="{521b1f8d-0d82-4ec1-b756-f45933e08951}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="GetAnalogOutput" Id="{b322adc4-b30c-475c-bdb0-2ba7c39039ff}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD GetAnalogOutput : BOOL
+VAR_INPUT
+  Index : UINT;
+END_VAR
+VAR_OUTPUT
+  task : I_NumberResultTask;
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Index < 1 OR index > ANALOG_OUTPUT_COUNT THEN
+  GetAnalogOutput := FALSE;
+  RETURN;
+END_IF
+
+_commandTask(_Result := analogOutputs[Index]);
+task := _numberCommandTask;
+
+GetAnalogOutput := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetAxisCurrents" Id="{fc570068-f9db-4768-89b4-60478ec9c0bd}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD GetAxisCurrents : BOOL
+VAR_IN_OUT
+  Values : ARRAY[*] OF LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetAxisPositions" Id="{9c14ea6f-f971-4dc2-8221-4e4e2b31db47}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD GetAxisPositions : BOOL
+VAR_IN_OUT
+  Values : ARRAY[*] OF LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetAxisTemperatures" Id="{a731a00e-3c0a-4add-a96e-fd6d088806a4}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD GetAxisTemperatures : BOOL
+VAR_IN_OUT
+  Values : ARRAY[*] OF LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetDigitalOutput" Id="{ddbb5b8f-52c5-4a9e-9e34-c18db80e0bb7}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD GetDigitalOutput : BOOL
+VAR_INPUT
+    Index : UINT;
+END_VAR
+VAR_OUTPUT
+  task : I_BoolResultTask;
+  value : BOOL;
+END_VAR
+VAR
+  cmdTask : T_CommandTask;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Index < 1 OR index > DIGITAL_OUTPUT_COUNT THEN
+  GetDigitalOutput := FALSE;
+  RETURN;
+END_IF
+
+_commandTask(_Result := TO_LREAL(digitalOutputs[Index]), _Done := TRUE);
+task := _boolCommandTask;
+
+GetDigitalOutput := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetJointPositions" Id="{2b8e9a86-fd78-4344-bbcd-0fe200aeddff}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD GetJointPositions : BOOL (* false if incompatible array length*)
+VAR_IN_OUT
+	(* values overwritten with joint positions.*)
+	  joints : ARRAY[*] OF LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetToolAnalogOutput" Id="{a38a8162-0215-4ad4-8431-0a01d847acab}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD GetToolAnalogOutput : BOOL
+VAR_INPUT
+    Index : UINT;
+END_VAR
+VAR_OUTPUT
+  task : I_NumberResultTask;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Index < 1 OR index > DIGITAL_OUTPUT_COUNT THEN
+  GetToolAnalogOutput := FALSE;
+  RETURN;
+END_IF
+
+_commandTask(_Result := toolAnalogOutputs[Index]);
+task := _numberCommandTask;
+
+GetToolAnalogOutput := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetToolDigitalOutput" Id="{9fffe7f0-c2a7-4f4c-b409-0dc3cc98c25a}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD GetToolDigitalOutput : BOOL
+VAR_INPUT
+	Index	: UINT;
+END_VAR
+VAR_OUTPUT
+	task	: I_BoolResultTask;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Index < 1 OR Index > TOOL_DIGITAL_OUTPUT THEN
+  GetToolDigitalOutput := FALSE;
+  RETURN;
+END_IF
+
+_commandTask(_Result := TO_LREAL(toolDigitalOutputs[Index]));
+task := _boolCommandTask;
+
+GetToolDigitalOutput := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Halt" Id="{1f522c86-80d1-4428-8c2f-7a8c2666651f}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Halt : BOOL
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsAtCartesianPosition" Id="{59686771-36ce-477f-a2c6-1bfff4544c83}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD IsAtCartesianPosition : BOOL
+VAR_INPUT
+	point	: TcRobot.ST_CartesianPoint;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsAtJointPosition" Id="{66eeedb0-7209-45b2-a6b3-aef2e7cfc684}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD IsAtJointPosition : BOOL
+VAR_IN_OUT
+	(* positions 1..NumberOfAxes will be used. passed array should be dimensioned accordingly*)
+  joints : ARRAY[*] OF LREAL; // positions 1..NumberOfAxes will be used. passed array should be dimensioned accordingly
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="JogAxis" Id="{b723cea3-a58a-4642-b130-fa322bd8cf68}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD JogAxis : BOOL // default tool and user frame
+VAR_INPUT
+  axisIndex : UDINT; // joint or enumerated cartesian direction/vector. See concrete type docs for enumeration of cartesian coords.
+  axisDirection : BOOL; // TRUE = positive, FALSE = negative
+  jogType : E_JogType; // Cartesian or Joint space
+END_VAR
+VAR_OUTPUT
+	task	: TcRobot.I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="JogAxisAdvanced" Id="{e76e1b11-ff2c-435b-add1-b9ad4ad224b9}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD JogAxisAdvanced : BOOL
+VAR_INPUT
+  axisIndex : UDINT; // joint or enumerated cartesian direction/vector. See concrete type docs for enumeration of cartesian coords.
+  axisDirection : BOOL; // TRUE = positive, FALSE = negative
+  jogType : E_JogType; // Cartesian or Joint space
+  coordType : INT; // set to 0 to leave default
+  user : INT; // set to 0 to leave default
+  tool : INT; // set to 0 to leave default
+END_VAR
+VAR_OUTPUT
+	task	: TcRobot.I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Manufacturer" Id="{5a43e0e0-9e77-485f-87c5-6338e32ed17c}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Manufacturer : STRING
+]]></Declaration>
+      <Get Name="Get" Id="{482f138d-a761-4bc4-9125-978d3d017e01}">
+        <Declaration><![CDATA[
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Model" Id="{f435e915-f498-42ff-80e0-2fc6bbbd32d6}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Model : STRING
+]]></Declaration>
+      <Get Name="Get" Id="{26e6127e-5430-4f7c-aa44-95b7846ec867}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="MoveAbs" Id="{d11a239e-0a9a-448a-9962-1a53a98ca5c5}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD MoveAbs : BOOL
+VAR_INPUT
+  point : ST_CartesianPoint;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MoveJ" Id="{e423add9-81f9-4a51-b009-a07e53ce789c}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD MoveJ : BOOL
+VAR_IN_OUT
+  joints : ARRAY[*] OF LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+VAR
+  returnedTask : T_CommandTask;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF UPPER_BOUND(joints,1) > _axisCount THEN
+  task := returnedTask;
+  RETURN;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Position" Id="{46e2c8c4-9558-4310-a2a6-01359d992138}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Position : ST_CartesianPoint]]></Declaration>
+      <Get Name="Get" Id="{2173d570-f97d-4a42-8860-7c15f029019e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Reset" Id="{421d94c9-1118-40da-8183-faff553dace0}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Reset : BOOL
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Running" Id="{0dacab0c-ea40-4e36-9cb5-0ef3bcd26dc6}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Running : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{d1d03029-a131-48f5-8644-b7baf860776a}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="SetAnalogOutput" Id="{f79fae92-208b-48bb-a70b-40fc0ffe9ad6}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetAnalogOutput : BOOL
+VAR_INPUT
+  Index : UINT;
+  Value : LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Index < 1 OR index > DIGITAL_OUTPUT_COUNT THEN
+  SetAnalogOutput := FALSE;
+  RETURN;
+END_IF
+
+tasktimer.IN := FALSE;
+tasktimer.IN := TRUE;
+
+analogOutputs[Index] := Value;
+task := _commandTask;
+
+SetAnalogOutput := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetAtPosDeltas" Id="{c0f75a41-7ffc-4039-a90b-ce89194695b4}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetAtPosDeltas : BOOL
+VAR_INPUT
+  atPosCartesianDeltas : ST_CartesianPoint;
+END_VAR
+VAR_IN_OUT
+  atPosJointDeltas : ARRAY[*] OF LREAL; // positions 1..NumberOfAxes will be used. passed array should be dimensioned accordingly
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetBufferMode" Id="{6ffd794f-d6a9-4eb4-b470-6b664c06957e}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetBufferMode : BOOL
+VAR_INPUT
+  BufferMode : E_BufferMode;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetCarteasianAcceleration" Id="{85dda38a-040b-4f52-9ac5-51cddf3a9b78}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetCarteasianAcceleration : BOOL
+VAR_INPUT
+  Acceleration : LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetCartesianSpeed" Id="{fe07bbab-44d4-4192-af0e-5610faa953a3}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetCartesianSpeed : BOOL
+VAR_INPUT
+  Speed : LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetConnectionTime" Id="{33f430ae-2a96-0805-2f4e-abac8935e778}" FolderPath="MockSetup Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC SetConnectionTime  // set simulated connection time
+VAR_INPUT
+  connectionTime : TIME;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[connectionTimer.PT := connectionTime;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetDigitalOutput" Id="{fbad9e30-660d-44ee-b1e4-f426c3bf60ed}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetDigitalOutput : BOOL
+VAR_INPUT
+  Index : UINT;
+  Value : BOOL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Index < 1 OR index > DIGITAL_OUTPUT_COUNT THEN
+  SetDigitalOutput := FALSE;
+  RETURN;
+END_IF
+
+tasktimer.IN := FALSE;
+tasktimer.IN := TRUE;
+
+digitalOutputs[Index] := TRUE;
+_commandTask(_Done := TRUE);
+task := _commandTask;
+
+SetDigitalOutput := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetGeneralCommandResponseDuration" Id="{8118186d-6855-4c8a-b59c-b7b713f02e50}" FolderPath="MockSetup Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC SetGeneralCommandResponseDuration : BOOL // This sets the duration that the task will take, used for causing timeout or done in the returned task
+VAR_INPUT
+    taskTime : TIME;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[tasktimer.PT := taskTime;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetJogType" Id="{e28db961-d258-4313-8a33-3c20de35ebc8}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetJogType : BOOL
+VAR_INPUT
+  JogType : E_JogType;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetJointAcceleration" Id="{e49ec01e-e14d-437c-a820-aaa73f0c038c}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetJointAcceleration : BOOL
+VAR_INPUT
+  Acceleration : LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetJointSpeed" Id="{b2f3ce57-58aa-4357-b698-11e54a0f9ec8}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetJointSpeed : BOOL
+VAR_INPUT
+  Speed : LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetToolAnalogOutput" Id="{39b00a63-134a-43a3-b689-a049deccd970}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetToolAnalogOutput : BOOL
+VAR_INPUT
+  Index : UINT;
+  Value : LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Index > ANALOG_OUTPUT_COUNT THEN
+  SetToolAnalogOutput := FALSE;
+  RETURN;
+END_IF
+
+tasktimer.IN := FALSE;
+tasktimer.IN := TRUE;
+
+toolDigitalOutputs[Index] := TRUE;
+task := _commandTask;
+
+SetToolAnalogOutput := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetToolDigitalOutput" Id="{a799ef3c-8388-4a9a-bef2-22e024f79347}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetToolDigitalOutput : BOOL
+VAR_INPUT
+	Index	: UINT;
+	Value	: BOOL;
+END_VAR
+VAR_OUTPUT
+	task	: TcRobot.I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Index < 1 OR Index > TOOL_ANALOG_OUTPUT THEN
+  SetToolDigitalOutput := FALSE;
+  RETURN;
+END_IF
+
+tasktimer.IN := FALSE;
+tasktimer.IN := TRUE;
+
+toolDigitalOutputs[Index] := TRUE;
+task := _commandTask;
+
+SetToolDigitalOutput := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetToolFrame" Id="{7845f72d-20ab-41f5-a329-3c9bfd0fd8fb}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetToolFrame : BOOL
+VAR_INPUT
+ Frame : ST_CartesianPoint;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetTransitionMode" Id="{39572f02-5f91-423e-a853-b22d710b61f5}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetTransitionMode : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetTransitionParameter" Id="{8775b29d-f761-40b1-ac4f-383a3c43ae28}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetTransitionParameter : BOOL
+VAR_INPUT
+  CPratio : LREAL;
+END_VAR
+VAR_OUTPUT
+	task	: TcRobot.I_Task;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetUserFrame" Id="{b885c6dd-241e-4063-921e-c573396ee25f}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetUserFrame : BOOL
+VAR_INPUT
+  Frame : ST_CartesianPoint;
+END_VAR
+VAR_OUTPUT
+	task : I_Task;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Stop" Id="{b6470bbe-62bc-49e9-8f0d-e53ffab7abb5}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Stop : BOOL
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ToolPosition" Id="{d4b202f9-68fe-4baf-a062-65718cfd8d98}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY ToolPosition : ST_CartesianPoint]]></Declaration>
+      <Get Name="Get" Id="{69eba617-2635-4b58-851f-90f8212eff16}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="T_MockTcRobot">
+      <LineId Id="3" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Busy.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.CartesianPosition.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.ClearError">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Connect">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Connected.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.CyclicLogic">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Disable">
+      <LineId Id="3" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Disconnect">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Done.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Enable">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Enabled.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Error.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.ErrorID.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.GetAnalogOutput">
+      <LineId Id="3" Count="7" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.GetAxisCurrents">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.GetAxisPositions">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.GetAxisTemperatures">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.GetDigitalOutput">
+      <LineId Id="3" Count="7" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.GetJointPositions">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.GetToolAnalogOutput">
+      <LineId Id="3" Count="7" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.GetToolDigitalOutput">
+      <LineId Id="3" Count="7" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Halt">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.IsAtCartesianPosition">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.IsAtJointPosition">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.JogAxis">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.JogAxisAdvanced">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Manufacturer.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Model.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.MoveAbs">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.MoveJ">
+      <LineId Id="3" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Position.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Reset">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Running.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetAnalogOutput">
+      <LineId Id="3" Count="10" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetAtPosDeltas">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetBufferMode">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetCarteasianAcceleration">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetCartesianSpeed">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetConnectionTime">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetDigitalOutput">
+      <LineId Id="3" Count="11" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetGeneralCommandResponseDuration">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetJogType">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetJointAcceleration">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetJointSpeed">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetToolAnalogOutput">
+      <LineId Id="3" Count="10" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetToolDigitalOutput">
+      <LineId Id="3" Count="10" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetToolFrame">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetTransitionMode">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetTransitionParameter">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.SetUserFrame">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.Stop">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockTcRobot.ToolPosition.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

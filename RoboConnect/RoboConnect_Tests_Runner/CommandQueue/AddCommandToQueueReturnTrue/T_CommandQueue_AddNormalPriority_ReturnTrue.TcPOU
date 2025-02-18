@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="T_CommandQueue_AddNormalPriority_ReturnTrue" Id="{6fc122be-9b5f-40d4-804f-76d660f29ad9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_CommandQueue_AddNormalPriority_ReturnTrue EXTENDS T_UnitTestBase
+VAR
+  command : T_CommandTask;
+  commandQueue : T_CommandQueue;
+  myTestState, prevState : (ARRANGE, ACT, ASSERT);
+  actual : BOOL := TRUE;
+  expected : BOOL := TRUE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE myTestState OF
+  ARRANGE:
+    myTestState := ACT;
+
+  ACT:
+    actual := commandQueue.AddNormalPriority(command);
+    myTestState := ASSERT;
+
+  ASSERT:
+    assertion.AssertEquals_BOOL(expected, actual, 'commandQueue.AddNormalPriority = TRUE');
+    myTestState := ARRANGE;
+    TestFinished();
+END_CASE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

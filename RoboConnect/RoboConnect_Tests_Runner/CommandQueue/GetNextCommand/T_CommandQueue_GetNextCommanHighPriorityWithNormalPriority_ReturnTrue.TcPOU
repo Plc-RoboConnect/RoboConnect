@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="T_CommandQueue_GetNextCommanHighPriorityWithNormalPriority_ReturnTrue" Id="{5a88bb6b-1526-492f-afaf-f386ba6c0e3a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_CommandQueue_GetNextCommanHighPriorityWithNormalPriority_ReturnTrue EXTENDS T_UnitTestBase
+VAR
+  commandHighPriority : T_CommandTask;
+  commandNormalPriority : T_CommandTask;
+  commandQueue : T_CommandQueue;
+  myTestState, prevState : (ARRANGE, ACT, ASSERT);
+  actual : I_Task;
+  expected : I_Task;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE myTestState OF
+  ARRANGE:
+  	expected := commandHighPriority;
+	commandQueue.Clear();
+	commandQueue.AddNormalPriority(commandNormalPriority);
+	commandQueue.AddHighPriority(commandHighPriority);
+    myTestState := ACT;
+  
+  ACT:
+    commandQueue.GetNext(output_command => actual);
+	myTestState := ASSERT;
+	
+  ASSERT:
+    assertion.AssertEquals_INTERFACE(expected, actual, 'commandQueue.GetNext high priority with Low priority = TRUE');
+    myTestState := ARRANGE;
+    TestFinished();
+END_CASE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

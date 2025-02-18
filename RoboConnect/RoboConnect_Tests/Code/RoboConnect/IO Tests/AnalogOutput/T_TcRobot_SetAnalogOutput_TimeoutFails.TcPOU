@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_TcRobot_SetAnalogOutput_TimeoutFails" Id="{33999cfb-aaba-4e4b-8cc4-178f456b901a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_RoboConnect_SetAnalogOutput_TimeoutFails EXTENDS T_UnitTestBase
+VAR
+  robot : I_RoboConnect;
+  timeOutTimer : TON;
+  targetAO : UINT;
+  myTestState, prevState :
+    (INIT,
+    ARRANGE,
+    ACT,
+    ASSERT) := INIT;
+  expected, actual : BOOL;
+  counter : UINT;
+  returnedTask : I_Task;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE myTestState OF
+  INIT:
+    StateChanged();
+    myTestState := ARRANGE;
+
+  ARRANGE:
+    IF StateChanged() THEN
+      expected := TRUE;
+      robot.Connect();
+    END_IF
+
+    IF robot.Connected THEN
+      myTestState := ACT;
+    END_IF
+
+  ACT:
+    robot.SetDigitalOutput(targetAO,TRUE, task => returnedTask);
+    myTestState := ASSERT;
+
+  ASSERT:
+    IF timeOutTimer.Q THEN
+      actual := returnedTask.Timeout;
+      assertion.AssertEquals_BOOL(expected, actual, 'actual := returnedTask.Timeout');
+      TestFinished();
+      myTestState := INIT;
+
+    END_IF
+
+END_CASE
+
+robot.CyclicLogic();
+timeOutTimer(IN := myTestState = ASSERT);]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{4e3d4fd8-68aa-441d-bea0-b1eaa99a0cdb}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+  bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+  bInCopyCode : BOOL; // if TRUE, the instance afterwards gets moved into the copy code (online change)
+  TestSuite : tcl_SimpleUnitTestLibrary.I_TestSuite;
+  robot : I_TcRobot;
+  targetAo : UINT;
+  timeout : TIME;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.robot := robot;
+THIS^.timeoutTimer.PT := timeout;
+THIS^.targetAo := targetAo;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StateChanged" Id="{729e8e0f-c1ba-495e-bb02-0197cdd74405}">
+      <Declaration><![CDATA[METHOD PRIVATE StateChanged : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF  myTestState = prevState THEN
+  RETURN;
+END_IF
+
+prevState := myTestState;
+StateChanged := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WaitForCycles" Id="{635b8f51-c885-4642-a7cb-8ead6bafc957}">
+      <Declaration><![CDATA[METHOD WaitForCycles : BOOL
+VAR_INPUT
+  maxCount : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[counter := counter + 1;
+
+IF counter = maxCount THEN
+  counter := 0;
+  WaitForCycles := TRUE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="T_TcRobot_SetAnalogOutput_TimeoutFails">
+      <LineId Id="3" Count="30" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcRobot_SetAnalogOutput_TimeoutFails.FB_init">
+      <LineId Id="3" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcRobot_SetAnalogOutput_TimeoutFails.StateChanged">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcRobot_SetAnalogOutput_TimeoutFails.WaitForCycles">
+      <LineId Id="3" Count="5" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_TcRobot_DisableNotConnected_ReturnsFalse" Id="{9337bc50-7949-4f97-b92b-8bbbe2c5dec3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_RoboConnect_DisableNotConnected_ReturnsFalse EXTENDS T_UnitTestBase
+VAR
+  robot : T_MockRoboConnect;
+  expected : BOOL := FALSE;
+  actual : BOOL := TRUE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[actual := robot.Disable();
+assertion.AssertEquals_BOOL(expected, actual, 'actual := robot.Disable();');
+TestFinished();
+]]></ST>
+    </Implementation>
+    <LineIds Name="T_TcRobot_DisableNotConnected_ReturnsFalse">
+      <LineId Id="3" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

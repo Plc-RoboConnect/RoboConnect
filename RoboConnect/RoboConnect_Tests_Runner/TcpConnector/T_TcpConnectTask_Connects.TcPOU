@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="T_TcpConnectTask_Connects" Id="{8cd0b219-c0b1-420a-8bfb-2183e3ac5aa7}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_TcpConnectTask_Connects EXTENDS T_UnitTestBase
+VAR
+  ip : T_IPv4Addr;
+  port : UINT;
+  tcpipConnection : T_ConnectionTCPIP;
+  
+  myTestState, prevState : (ARRANGE, ACT, ASSERT);
+  actual, expected : I_Task;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE myTestState OF
+  ARRANGE:
+    ip := '127.0.0.1';
+    port := 5000;
+
+  ACT:
+    tcpipConnection.Connect();
+    
+    IF resultTask.Done THEN
+      state := ARRANGE;
+		END_IF
+
+  ASSERT:
+    actual := resultTask.Done;
+    assertion.AssertEquals_BOOL(expected, actual, 'Task.Done = TRUE');
+    myTestState := ARRANGE;
+    TestFinished();
+
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="T_TcpConnectTask_Connects">
+      <LineId Id="47" Count="5" />
+      <LineId Id="56" Count="2" />
+      <LineId Id="67" Count="1" />
+      <LineId Id="59" Count="6" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

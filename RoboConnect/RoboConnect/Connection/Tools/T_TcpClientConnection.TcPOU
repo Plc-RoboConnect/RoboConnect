@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_TcpClientConnection" Id="{eaea54c5-977f-4611-9c99-b17f35128b8f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_TcpClientConnection
+VAR
+    connection : FB_ClientServerConnection;
+	_log : T_NamedBase;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Methods" Id="{6def861a-62b9-4c4c-8f17-7029d4004938}" />
+    <Folder Name="Properties" Id="{b0340ce8-3eeb-41a7-8440-33a147d8ba6f}" />
+    <Method Name="Connect" Id="{31913ce7-d64c-4dd7-9523-4cb6ecca04b5}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC Connect
+VAR_INPUT
+  ip : T_IPv4Addr;
+  port : UINT;
+  timeout : TIME;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[connection.sRemoteHost := ip;
+connection.nRemotePort := port;
+connection.tReconnect := timeout;
+connection.nMode := CONNECT_MODE_ENABLEDBG;
+connection.bEnable := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CyclicLogic" Id="{02f5bf77-288e-4841-bc8a-aeb4ef2ec743}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC CyclicLogic
+VAR_INST
+	TON_ConnectTimer : TON;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[connection();
+
+TON_ConnectTimer(
+	IN:= connection.bEnable AND NOT IsConnected,
+	PT:= connection.tReconnect,
+	Q=> ,
+	ET=> );
+
+IF TON_ConnectTimer.Q THEN
+	connection.bEnable := FALSE;
+	_log.LogError('Connection time out');
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Disconnect" Id="{bcd1c9b6-20ca-4c90-a7ba-6571ffceca61}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC Disconnect
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[connection.bEnable := FALSE;
+_log.LogInfo('Disconnected');]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ErrID" Id="{4c01374e-e118-4533-8afe-8def69b515e2}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY ErrID : UDINT]]></Declaration>
+      <Get Name="Get" Id="{f633004f-cd87-4d79-82f3-96c15c67de5a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ErrID := connection.nErrId;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsBusy" Id="{2ffc28c2-c438-431b-8332-675d6f38478f}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY PUBLIC IsBusy : BOOL]]></Declaration>
+      <Get Name="Get" Id="{440d0775-bbcd-4244-9291-a0fc6df5ed93}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsBusy := connection.bBusy;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsConnected" Id="{12af8a5f-3124-4214-b0f5-fb87bd44f1df}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY PUBLIC IsConnected : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ab05c78f-5be3-4326-b844-b58c9d079910}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsConnected := (connection.eState = E_SocketConnectionState.eSOCKET_CONNECTED);]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsError" Id="{4facca61-76db-435c-a031-78ba8e61588a}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY PUBLIC IsError : BOOL]]></Declaration>
+      <Get Name="Get" Id="{a55f6aee-c8ea-4860-93df-67409f9f55d7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsError := connection.bError;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Socket" Id="{700ebf11-fa88-4edf-97de-f19d67168f0f}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY PUBLIC Socket : REFERENCE TO T_HSOCKET]]></Declaration>
+      <Get Name="Get" Id="{7b1a6841-b485-47e9-960c-95973eb75e36}">
+        <Declaration><![CDATA[
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Socket REF= connection.hSocket;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="T_TcpClientConnection">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpClientConnection.Connect">
+      <LineId Id="3" Count="1" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpClientConnection.CyclicLogic">
+      <LineId Id="3" Count="0" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="12" Count="3" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpClientConnection.Disconnect">
+      <LineId Id="2" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpClientConnection.ErrID.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpClientConnection.IsBusy.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpClientConnection.IsConnected.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpClientConnection.IsError.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpClientConnection.Socket.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

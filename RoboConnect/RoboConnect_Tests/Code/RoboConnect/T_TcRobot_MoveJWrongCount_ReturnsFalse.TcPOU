@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_TcRobot_MoveJWrongCount_ReturnsFalse" Id="{663f15a1-4e03-43a0-bf7f-425e2d583689}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_RoboConnect_MoveJWrongCount_ReturnsFalse EXTENDS T_UnitTestBase
+VAR
+  robot : T_MockRoboConnect;
+  targets : ARRAY [1..4] OF LREAL;
+  expected : BOOL := FALSE;
+  actual : BOOL := TRUE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[actual := robot.MoveJ(targets);
+assertion.AssertEquals_BOOL(expected, actual, 'actual := robot.MoveJ(targets)');
+TestFinished();]]></ST>
+    </Implementation>
+    <LineIds Name="T_TcRobot_MoveJWrongCount_ReturnsFalse">
+      <LineId Id="3" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

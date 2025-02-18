@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_RoboConnect" Id="{02503871-8f47-4c20-80db-a63800a3be8d}">
+    <Declaration><![CDATA[INTERFACE I_RoboConnect
+]]></Declaration>
+    <Folder Name="Gets" Id="{249c65d7-1bd0-4e59-8a6a-d7a04722ff95}" />
+    <Folder Name="Methods" Id="{356b0d4f-a02f-47b4-bc6a-c1b050a155f7}" />
+    <Folder Name="Properties" Id="{ff774016-a183-426a-9e03-ed937907bb4a}" />
+    <Folder Name="Sets" Id="{4142135c-ab98-46b9-833b-7d861e4424da}" />
+    <Property Name="CartesianPosition" Id="{cce7e25a-3713-4dde-adbf-2e2106ba431e}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY CartesianPosition : ST_CartesianPoint]]></Declaration>
+      <Get Name="Get" Id="{e744f22e-b540-4022-ad01-9287d848f66d}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="ClearError" Id="{072133d6-336f-4219-afc0-49b55cb949bb}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD ClearError : BOOL
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Connect" Id="{a6749e94-d7d3-4aeb-bff3-4479cf23993e}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Connect : BOOL
+//VAR_OUTPUT
+//  task : I_Task;
+//END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="Connected" Id="{5419c989-1faf-4e13-a222-906d208d9395}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Connected : BOOL]]></Declaration>
+      <Get Name="Get" Id="{7d7395ff-9d10-45ce-9703-99bba21b76f3}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="CyclicLogic" Id="{b30fc205-f9ba-49e8-b65e-e9c43c9df929}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD CyclicLogic
+
+]]></Declaration>
+    </Method>
+    <Method Name="Disable" Id="{ef39f1cd-1baa-42a3-90a5-07e22a36dbc5}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Disable : BOOL
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Disconnect" Id="{29d88efa-eadb-41d4-bd33-96b570e1d994}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Disconnect : BOOL
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Enable" Id="{9bbb6898-3d71-46e9-b75a-b3199389ffb9}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Enable : BOOL
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="Enabled" Id="{578a8507-e499-4e6c-8a73-98727fdf1a3e}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Enabled : BOOL]]></Declaration>
+      <Get Name="Get" Id="{d057f5e1-8a75-4ac3-91fc-d77c0bd14c21}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Error" Id="{952a3e1c-1934-4aec-aeb5-aa710749a071}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Error : BOOL]]></Declaration>
+      <Get Name="Get" Id="{02bbdcbb-363e-468a-98dc-fb99b8ee766a}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="ErrorID" Id="{ff45abc6-fc0d-4dd3-8bc9-ddeb1ce21f2d}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY ErrorID : LREAL]]></Declaration>
+      <Get Name="Get" Id="{602de1d6-37d3-4af4-b5cc-08a16b08cbfc}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="FreeAllTasks" Id="{eaba8a54-7547-4899-b8cf-ecd77e3f0ea4}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD FreeAllTasks
+]]></Declaration>
+    </Method>
+    <Method Name="GetAnalogOutput" Id="{de95f70c-0c07-4581-9622-b0ec7641deb2}" FolderPath="Gets\">
+      <Declaration><![CDATA[METHOD GetAnalogOutput : BOOL
+VAR_INPUT
+  Index : UINT;
+END_VAR
+VAR_OUTPUT
+  task : I_NumberResultTask;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetAxisCurrents" Id="{8a579a95-0f5a-45e9-9e6f-607c3a7f2207}" FolderPath="Gets\">
+      <Declaration><![CDATA[METHOD GetAxisCurrents : BOOL
+VAR_IN_OUT
+  Values : ARRAY[*] OF LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetAxisPositions" Id="{9027bfdf-b04c-4812-8abe-6412048a330a}" FolderPath="Gets\">
+      <Declaration><![CDATA[METHOD GetAxisPositions : BOOL
+VAR_IN_OUT
+  Values : ARRAY[*] OF LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetAxisTemperatures" Id="{dca4d5b5-3018-400d-beb7-481ec82ee259}" FolderPath="Gets\">
+      <Declaration><![CDATA[METHOD GetAxisTemperatures : BOOL
+VAR_IN_OUT
+  Values : ARRAY[*] OF LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetDigitalOutput" Id="{669ee6e1-4749-478e-bb65-0af9d7ee89d4}" FolderPath="Gets\">
+      <Declaration><![CDATA[METHOD GetDigitalOutput : BOOL
+VAR_INPUT
+    Index : UINT;
+END_VAR
+VAR_OUTPUT
+  task : I_BoolResultTask;
+  value 	: BOOL;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetJointPositions" Id="{c045bfc2-22ee-4168-85f4-b96d13cc62b2}" FolderPath="Gets\">
+      <Declaration><![CDATA[METHOD GetJointPositions : BOOL // false if incompatible array length
+VAR_IN_OUT
+  joints : ARRAY[*] OF LREAL; // values overwritten with joint positions.
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetToolAnalogOutput" Id="{74575e6f-0431-4bf7-88fc-eb26135171c8}" FolderPath="Gets\">
+      <Declaration><![CDATA[METHOD GetToolAnalogOutput : BOOL
+VAR_INPUT
+  Index : UINT;
+END_VAR
+VAR_OUTPUT
+  task : I_NumberResultTask;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetToolDigitalOutput" Id="{867c827f-6a96-487f-b720-068daf032907}" FolderPath="Gets\">
+      <Declaration><![CDATA[METHOD GetToolDigitalOutput : BOOL
+VAR_INPUT
+  Index : UINT;
+END_VAR
+VAR_OUTPUT
+  task : I_BoolResultTask;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Halt" Id="{0a8144af-07f1-44de-bdf3-b84835294d04}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Halt : BOOL
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="IsAtCartesianPosition" Id="{9a1b2c6d-b029-4dd9-bb39-8651f78b8f49}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD IsAtCartesianPosition : BOOL
+VAR_INPUT
+	point	: ST_CartesianPoint;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="IsAtJointPosition" Id="{c6cd58e0-4bbc-418c-9142-af50d33ef835}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD IsAtJointPosition : BOOL
+VAR_IN_OUT
+  joints : ARRAY[*] OF LREAL; // positions 1..NumberOfAxes will be used. passed array should be dimensioned accordingly
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="JogAxis" Id="{76c3585a-0d05-4bfe-94cb-974791276535}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD JogAxis : BOOL // default tool and user frame
+VAR_INPUT
+  axisIndex : UDINT; // joint or enumerated cartesian direction/vector. See concrete type docs for enumeration of cartesian coords.
+  axisDirection : BOOL; // TRUE = positive, FALSE = negative
+  jogType : E_JogType; // Cartesian or Joint space
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="JogAxisAdvanced" Id="{b1ca1d29-561d-4c66-a728-894c664d07cb}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD JogAxisAdvanced : BOOL
+VAR_INPUT
+  axisIndex : UDINT; // joint or enumerated cartesian direction/vector. See concrete type docs for enumeration of cartesian coords.
+  axisDirection : BOOL; // TRUE = positive, FALSE = negative
+  jogType : E_JogType; // Cartesian or Joint space
+  coordType : INT; // set to 0 to leave default
+  user : INT; // set to 0 to leave default
+  tool : INT; // set to 0 to leave default
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="Manufacturer" Id="{7aa5464b-3567-43be-bea5-700cd075092a}" FolderPath="Properties\">
+      <Declaration><![CDATA[{attribute 'monitoring' : 'variable'}
+PROPERTY Manufacturer : STRING]]></Declaration>
+      <Get Name="Get" Id="{35345944-48d5-4628-8665-91446440147d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Model" Id="{1cb8d963-2dfc-4604-9bd2-c194335b027a}" FolderPath="Properties\">
+      <Declaration><![CDATA[{attribute 'monitoring' : 'variable'}
+PROPERTY Model : STRING]]></Declaration>
+      <Get Name="Get" Id="{6980b2a9-b728-4209-b342-cf76de7b9259}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="MoveAbs" Id="{6ae0e6e6-2e2a-41a3-bd30-569b17e13e58}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD MoveAbs : BOOL
+VAR_INPUT
+  point : ST_CartesianPoint;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="MoveJ" Id="{e95e6def-22a3-4c5f-83b5-d8bf994a59fc}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD MoveJ : BOOL
+VAR_IN_OUT
+  joints : ARRAY[*] OF LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Reset" Id="{88edd762-f243-4f1d-ae3b-570ec37a1b1e}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Reset : BOOL
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="Running" Id="{4d11542d-5087-4e83-b2ee-a69027081f1f}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Running : BOOL]]></Declaration>
+      <Get Name="Get" Id="{5c1059de-0f49-4794-b9e4-ced376382a38}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="SetAnalogOutput" Id="{beb570c7-27ee-48cc-87d9-d96d9fadb09e}" FolderPath="Sets\">
+      <Declaration><![CDATA[METHOD SetAnalogOutput : BOOL
+VAR_INPUT
+  Index : UINT;
+  Value : LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetAtPosDeltas" Id="{d0158d40-b044-46a6-9414-adf07e605777}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD SetAtPosDeltas : BOOL
+VAR_INPUT
+  atPosCartesianDeltas : ST_CartesianPoint;
+END_VAR
+VAR_IN_OUT
+  atPosJointDeltas : ARRAY[*] OF LREAL; // positions 1..NumberOfAxes will be used. passed array should be dimensioned accordingly
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="SetBufferMode" Id="{eca23521-be9f-4ef7-aa55-f13a83dbda21}" FolderPath="Sets\">
+      <Declaration><![CDATA[METHOD SetBufferMode : BOOL
+VAR_INPUT
+  BufferMode : E_BufferMode;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetCarteasianAcceleration" Id="{71d8fcf1-4cf9-4f49-b10f-b9475c774e5f}" FolderPath="Sets\">
+      <Declaration><![CDATA[METHOD SetCarteasianAcceleration : BOOL
+VAR_INPUT
+  Acceleration : LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetCartesianSpeed" Id="{f45c91e6-7761-4a2b-8958-a663f7d05cd1}" FolderPath="Sets\">
+      <Declaration><![CDATA[METHOD SetCartesianSpeed : BOOL
+VAR_INPUT
+  Speed : LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetDigitalOutput" Id="{f954d741-fbfb-47d4-b0a8-9c42b7afb022}" FolderPath="Sets\">
+      <Declaration><![CDATA[METHOD SetDigitalOutput : BOOL
+VAR_INPUT
+  Index : UINT;
+  Value : BOOL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetJointAcceleration" Id="{3055930f-0922-44d4-a12c-7b532b68c0a7}" FolderPath="Sets\">
+      <Declaration><![CDATA[METHOD SetJointAcceleration : BOOL
+VAR_INPUT
+  Acceleration : LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetJointSpeed" Id="{538590cb-1193-4f4b-8107-f5acdab59d34}" FolderPath="Sets\">
+      <Declaration><![CDATA[METHOD SetJointSpeed : BOOL
+VAR_INPUT
+  Speed : LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetToolAnalogOutput" Id="{1d70d11d-21ac-4449-ba70-59d1775fdc0f}" FolderPath="Sets\">
+      <Declaration><![CDATA[METHOD SetToolAnalogOutput : BOOL
+VAR_INPUT
+  Index : UINT;
+  Value : LREAL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetToolDigitalOutput" Id="{a125f6d0-a31f-4d40-a490-681e2fb8daed}" FolderPath="Sets\">
+      <Declaration><![CDATA[METHOD SetToolDigitalOutput : BOOL
+VAR_INPUT
+  Index : UINT;
+  Value : BOOL;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetToolFrame" Id="{148a31be-b8fd-4b42-9f58-68c6a5083b50}" FolderPath="Sets\">
+      <Declaration><![CDATA[METHOD SetToolFrame : BOOL
+VAR_INPUT
+ Frame : ST_CartesianPoint;
+END_VAR
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetTransitionMode" Id="{ab53e653-973a-4acb-b683-deecce33a65e}" FolderPath="Sets\">
+      <Declaration><![CDATA[METHOD SetTransitionMode : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetTransitionParameter" Id="{1c624a69-1503-421f-9e87-ad5859dc8e17}" FolderPath="Sets\">
+      <Declaration><![CDATA[METHOD SetTransitionParameter : BOOL
+VAR_INPUT
+  CPratio : LREAL;
+END_VAR
+VAR_OUTPUT
+	task	: I_Task;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="SetUserFrame" Id="{ac52004e-74cb-423d-9d42-634a9f786303}" FolderPath="Sets\">
+      <Declaration><![CDATA[METHOD SetUserFrame : BOOL
+VAR_INPUT
+  Frame : ST_CartesianPoint;
+END_VAR
+VAR_OUTPUT
+	task : I_Task;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="Stop" Id="{c6f9eda3-4bc9-4983-88ed-f3bb6dd155cd}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Stop : BOOL
+VAR_OUTPUT
+  task : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="ToolPosition" Id="{983c30cc-2d07-4d44-a810-795290d89bc9}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY ToolPosition : ST_CartesianPoint]]></Declaration>
+      <Get Name="Get" Id="{143dcba0-2092-46cf-9d73-7c4aa0c20dc1}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

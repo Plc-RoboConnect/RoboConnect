@@ -1,0 +1,8 @@
+# Ignore everything in the root directory
+/*
+
+# Except the .gitignore file itself
+!.gitignore
+
+# Except intecre ltd
+!intecre ltd/

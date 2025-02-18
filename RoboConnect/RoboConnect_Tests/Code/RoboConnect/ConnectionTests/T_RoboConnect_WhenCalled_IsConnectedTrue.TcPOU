@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_RoboConnect_WhenCalled_IsConnectedTrue" Id="{244d12de-a76c-4ea5-b81b-43bad9781c8a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_RoboConnect_WhenCalled_IsConnectedTrue EXTENDS T_UnitTestBase
+VAR
+  robot : I_RoboConnect;
+  timeOutTimer : TON;
+  myTestState, prevState : (INIT, ARRANGE, ACT, ASSERT) := INIT;
+  expected, actual : BOOL;
+  counter : UINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE myTestState OF
+  INIT:
+    StateChanged();
+    myTestState := ARRANGE;
+
+  ARRANGE:
+    StateChanged();
+
+    expected := TRUE;
+    myTestState := ACT;
+
+  ACT:
+    robot.Connect();
+    myTestState := ASSERT;
+
+  ASSERT:
+
+    IF robot.Connected OR timeOutTimer.Q THEN
+      actual := robot.Connected;
+      assertion.AssertEquals_BOOL(expected, actual, 'IsConnected := TRUE');
+      TestFinished();
+      myTestState := INIT;
+      // dont disconnect here, connection is required for the next test
+    END_IF
+
+END_CASE
+
+timeOutTimer(IN := myTestState = ASSERT);]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{13d14303-026c-0553-1a6e-eed98e3e944a}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+  bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+  bInCopyCode : BOOL; // if TRUE, the instance afterwards gets moved into the copy code (online change)
+  TestSuite : tcl_SimpleUnitTestLibrary.I_TestSuite;
+  robot : I_TcRobot;
+  timeout : TIME;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.robot := robot;
+THIS^.timeOutTimer.PT := timeout;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StateChanged" Id="{8273eccb-e48e-40e1-905c-4c159a8023fc}">
+      <Declaration><![CDATA[METHOD PRIVATE StateChanged : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF  myTestState = prevState THEN
+  RETURN;
+END_IF
+
+prevState := myTestState;
+StateChanged := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WaitForCycles" Id="{6d391f95-bdfa-4a40-9c7e-b0ac0a32a831}">
+      <Declaration><![CDATA[METHOD WaitForCycles : BOOL
+VAR_INPUT
+  maxCount : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[counter := counter + 1;
+
+IF counter = maxCount THEN
+  counter := 0;
+  WaitForCycles := TRUE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="T_RoboConnect_WhenCalled_IsConnectedTrue">
+      <LineId Id="3" Count="26" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_RoboConnect_WhenCalled_IsConnectedTrue.FB_init">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_RoboConnect_WhenCalled_IsConnectedTrue.StateChanged">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_RoboConnect_WhenCalled_IsConnectedTrue.WaitForCycles">
+      <LineId Id="3" Count="5" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="T_CommandInvoker_InvokesCommand_ProcessingTrue" Id="{ddb0658d-7099-4034-bdb8-19588cd1dc34}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_CommandInvoker_InvokesCommand_ProcessingTrue EXTENDS T_UnitTestBase
+VAR
+  command : T_MockCommandTask;
+  commandQueue : T_CommandQueue;
+  commandInvoker : T_CommandInvoker;
+  myTestState, prevState : (ARRANGE, ACT, ASSERT);
+  actual : BOOL;
+  expected : BOOL := TRUE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE myTestState OF
+  ARRANGE:
+    myTestState := ACT;
+
+  ACT:
+    commandInvoker.Initialise(commandQueue);
+    commandInvoker.CyclicLogic();
+    command.initalise('test');
+    commandQueue.AddNormalPriority(command);
+    commandInvoker.CyclicLogic();
+    myTestState := ASSERT;
+
+  ASSERT:
+    actual := commandInvoker.Processing;
+    assertion.AssertEquals_UINT(expected, actual, 'actual := command.Busy;');
+    myTestState := ARRANGE;
+    TestFinished();
+END_CASE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

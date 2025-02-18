@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_TcpSend" Id="{77962015-4eaf-4782-8a73-a6c6e369ba80}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_TcpSend
+VAR
+	sender : FB_SocketSend;
+	_socket : REFERENCE TO T_HSOCKET;	// TCP-IP socket
+	_log : T_NamedBase;
+	_message : T_MAXSTRING;				// Message to send
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Methods" Id="{b0a6419d-7403-4f4e-94c3-f59fe72f21df}" />
+    <Folder Name="Properties" Id="{ac29a6d0-5ee4-4e08-a3d9-3eb656b8c981}" />
+    <Method Name="CyclicLogic" Id="{ac3c3310-df7f-406d-be73-c9b4ce7d7a04}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC CyclicLogic
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT __ISVALIDREF(_socket) THEN
+  RETURN;
+END_IF
+
+sender(
+	sSrvNetId:= , 
+	hSocket:= _socket, 
+	cbLen:= TO_UDINT(LEN(_message)), 
+	pSrc:= ADR(_message), 
+	bExecute:= , 
+	tTimeout:= TimeOut, 
+	bBusy=> , 
+	bError=> , 
+	nErrId=> );
+
+IF NOT sender.bBusy THEN
+  sender.bExecute := FALSE;
+END_IF
+
+IF sender.bError THEN
+	_log.LogError('Send Error');
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ErrID" Id="{c47b9c96-b7d6-4cda-b920-e7266e016f6f}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY ErrID : UDINT]]></Declaration>
+      <Get Name="Get" Id="{ca95efa7-a56b-46f4-95ac-c76f408774da}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ErrID := sender.nErrId;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="HasSocket" Id="{cd0135b7-1b06-48c1-90d9-bb4580a65c7b}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY INTERNAL HasSocket : BOOL]]></Declaration>
+      <Get Name="Get" Id="{cf6d40c3-6a1f-41f1-86e2-b12b24c4c714}">
+        <Declaration><![CDATA[
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HasSocket := __ISVALIDREF(_socket);]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsBusy" Id="{06cdc633-c504-4117-a331-b914d1da7da6}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY PUBLIC IsBusy : BOOL]]></Declaration>
+      <Get Name="Get" Id="{f731220c-a269-4699-b614-776b87a392ca}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsBusy := sender.bBusy;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsError" Id="{b125c8c6-3bc1-469a-a40c-c9bf25309665}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY PUBLIC IsError : BOOL]]></Declaration>
+      <Get Name="Get" Id="{b4a2bf1b-176b-4560-89d7-b336e18f7bc4}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsError := sender.bError;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Send" Id="{16968662-be37-487b-aeee-a7f97a741529}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC Send : BOOL;
+VAR_INPUT
+  message : T_MAXSTRING; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT HasSocket THEN
+  _log.LogError('Cannot Send as NOT HasSocket');
+  RETURN;
+
+END_IF
+
+_message := message;
+sender.bExecute := TRUE;
+Send := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetSocket" Id="{9a88923a-f0d1-4ccd-983a-26d9df27af99}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD INTERNAL SetSocket : BOOL
+VAR_IN_OUT
+  socket : T_HSOCKET;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_socket REF= socket;
+_log.LogDebug('SetSocket := TRUE');
+SetSocket := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="T_TcpSend">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpSend.CyclicLogic">
+      <LineId Id="3" Count="2" />
+      <LineId Id="17" Count="9" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="12" Count="2" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="32" Count="1" />
+    </LineIds>
+    <LineIds Name="T_TcpSend.ErrID.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpSend.HasSocket.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpSend.IsBusy.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpSend.IsError.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpSend.Send">
+      <LineId Id="3" Count="7" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpSend.SetSocket">
+      <LineId Id="3" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

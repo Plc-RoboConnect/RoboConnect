@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_CommandTask" Id="{ee4d4c1e-f281-4297-99e2-d750d653835a}">
+    <Declaration><![CDATA[INTERFACE I_CommandTask EXTENDS I_Task
+]]></Declaration>
+    <Folder Name="Methods" Id="{43c92586-db72-423c-9ec8-8ac578a6d493}" />
+    <Method Name="Initalise" Id="{e6fb384a-3d96-40ec-b318-8af562015284}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC Initalise : BOOL
+VAR_INPUT
+ comPort : I_Connection;
+ msg : T_Maxstring;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

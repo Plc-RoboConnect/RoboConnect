@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_CommandInvoker" Id="{d898da51-0896-4fe7-b22b-9ec23a208296}">
+    <Declaration><![CDATA[INTERFACE I_CommandInvoker
+]]></Declaration>
+    <Folder Name="Methods" Id="{f5b3d1ee-cb70-46f7-a281-f5c6b2c0d17f}" />
+    <Method Name="CyclicLogic" Id="{f5888847-01b4-4574-9959-4ad590fda087}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC CyclicLogic
+
+]]></Declaration>
+    </Method>
+    <Method Name="Initialise" Id="{9956610d-7ffe-4290-a760-4ad3c5ec748e}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC Initialise : BOOL
+VAR_INPUT
+  commandQueue : I_CommandQueue;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Reset" Id="{bb1bd401-9d8f-4092-a274-b5503152378b}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC Reset
+
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

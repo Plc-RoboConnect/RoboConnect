@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_CommandQueue" Id="{5248d130-29dc-48c1-b42b-333676ef5f95}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_CommandQueue EXTENDS T_NamedBase IMPLEMENTS I_CommandQueue
+VAR
+  low : T_TaskQueue;
+  normal : T_TaskQueue;
+  high : T_TaskQueue;
+END_VAR
+VAR CONSTANT
+	BUFFERSIZE : UINT := 32;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Methods" Id="{ae58345e-57b5-4a0a-a056-6546bc7b39b3}" />
+    <Folder Name="Properties" Id="{030d4d2e-e25d-46c4-9ce5-65e25170095e}" />
+    <Method Name="AddHighPriority" Id="{71116a0c-490f-4af5-b5a8-a6907e7aa5f6}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD AddHighPriority : BOOL
+VAR_INPUT
+  cmd : I_Task; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddHighPriority := AddWithPriority(cmd, E_CommandPriority.HIGH);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddLowPriority" Id="{3762e8f6-dc34-4f30-b13c-247c5171c1d4}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD AddLowPriority : BOOL
+VAR_INPUT
+  cmd : I_Task; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddLowPriority := AddWithPriority(cmd, E_CommandPriority.LOW);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddNormalPriority" Id="{61a64c53-93e9-4f81-b9b7-6c3d7147191f}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD AddNormalPriority : BOOL
+VAR_INPUT
+  cmd : I_Task; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddNormalPriority := AddWithPriority(cmd, E_CommandPriority.NORMAL);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddWithPriority" Id="{ea3bf24f-1aa3-4187-aba7-2c58cec368e6}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD AddWithPriority : BOOL
+VAR_INPUT
+  cmd : I_Task; 
+  priority : E_CommandPriority;
+END_VAR
+VAR
+  queueRef : REFERENCE TO T_TaskQueue;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF cmd = 0 THEN
+  LogError('Cant AddWithPriority() - cmd = 0 ');
+  RETURN;
+END_IF
+
+IF Count >= BUFFERSIZE THEN
+  LogError('Cant AddWithPriority() - Count >= BUFFERSIZE');
+  RETURN;
+END_IF
+
+CASE priority OF
+  E_CommandPriority.LOW:
+    queueRef REF= low;
+  E_CommandPriority.NORMAL:
+    queueRef REF= normal;
+  E_CommandPriority.HIGH:
+    queueRef REF= high;
+ELSE
+  LogError(CONCAT('Unknown priority for command: ', TO_STRING(priority)));
+  RETURN;
+
+END_CASE
+
+AddWithPriority := queueRef.Enqueue(cmd);
+
+LogInfo(CONCAT(TO_STRING(priority),' priority command added to queue'));]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Clear" Id="{799a7323-5b88-490a-879a-0ce72518e31d}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Clear
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[low.Clear();
+normal.Clear();
+high.Clear();
+
+logInfo('Command queue cleared');]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Count" Id="{30c8b091-960f-48eb-a80e-7d1dcbebcc22}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Count : UINT
+]]></Declaration>
+      <Get Name="Get" Id="{7fb86d84-c250-4512-8c94-b384361f4883}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[//Combine all three queues and return the result
+Count := Dint_to_Uint(high.Count + normal.Count + low.Count);]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="GetNext" Id="{66b226ff-3080-42e8-a5cf-e1d5a467a42b}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD GetNext : BOOL
+VAR_OUTPUT
+	output_command : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF high.Count > 0 THEN
+  IF high.TryDequeue(result => output_command) THEN
+    LogInfo('High priority item dequeued');
+    GetNext := TRUE;
+    RETURN;
+
+  ELSE
+    GetNext := FALSE;
+    RETURN;
+
+  END_IF
+ELSIF high.Count = 0 AND normal.Count > 0 THEN
+
+  IF normal.TryDequeue(result => output_command) THEN
+    LogInfo('Normal priority item dequeued');
+    GetNext := TRUE;
+    RETURN;
+
+  ELSE
+    GetNext := FALSE;
+    RETURN;
+
+  END_IF
+
+ELSIF high.Count = 0 AND normal.Count = 0 AND low.Count > 0 THEN
+  IF low.TryDequeue(result => output_command) THEN
+    LogInfo('Low priority item dequeued');
+    GetNext := TRUE;
+    RETURN;
+
+  ELSE
+    GetNext := FALSE;
+    RETURN;
+
+  END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="T_CommandQueue">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandQueue.AddHighPriority">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandQueue.AddLowPriority">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandQueue.AddNormalPriority">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandQueue.AddWithPriority">
+      <LineId Id="3" Count="24" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandQueue.Clear">
+      <LineId Id="3" Count="3" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandQueue.Count.Get">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandQueue.GetNext">
+      <LineId Id="3" Count="34" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

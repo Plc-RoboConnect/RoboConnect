@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_BoolResultTask" Id="{d224594f-8b3b-4c58-9de9-361ffc3f2952}">
+    <Declaration><![CDATA[INTERFACE I_BoolResultTask EXTENDS I_Task
+]]></Declaration>
+    <Property Name="Result" Id="{d5d593cd-8172-4dc2-86fd-10caaca73c1c}">
+      <Declaration><![CDATA[PROPERTY Result : BOOL]]></Declaration>
+      <Get Name="Get" Id="{11a9f9a2-afd6-4d7f-8c9a-c7d3670e9b7f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_TcpRecieve" Id="{fab74f05-9351-409e-9c84-d89df5f49a06}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_TcpRecieve
+VAR
+  receiver : FB_SocketReceive; //
+  _socket : REFERENCE TO T_HSOCKET; // TCP-IP socket
+  _log : T_NamedBase; //
+  receiveBuffer : RecvBuffer; // Contents of received buffer
+  receiveLength : UDINT; // Length of received string
+  trigNotBusy : F_TRIG;
+  execute : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// If no open socket, return
+IF NOT HasSocket THEN
+  RETURN;
+END_IF
+
+receiver(
+	sSrvNetId:= , 
+	hSocket:= _socket, 
+	cbLen:= SIZEOF(receiveBuffer), 
+	pDest:= ADR(receiveBuffer), 
+	bExecute:= , 
+	tTimeout:= TimeOut, 
+	bBusy=> , 
+	bError=> , 
+	nErrId=> , 
+	nRecBytes=> receiveLength);
+ 
+IF NOT execute THEN
+  receiver.bExecute := FALSE;
+  RETURN;
+END_IF
+
+receiver.bExecute S= NOT receiver.bExecute;
+
+// Receiver runs as soon as socket is connected
+// When bBusy goes low, check for new message
+trigNotBusy(CLK:= receiver.bBusy, Q=> );
+
+receiver.bExecute R= trigNotBusy.Q;]]></ST>
+    </Implementation>
+    <Folder Name="Methods" Id="{1e169119-e301-48ac-9ec5-1f6208abd685}" />
+    <Folder Name="Properties" Id="{fe5e4118-179e-4236-a049-82eb24ed3d0e}" />
+    <Method Name="CyclicLogic" Id="{e75004e8-96d2-474c-a54e-4d94ad18f7f6}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC CyclicLogic
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ErrID" Id="{5650876e-0460-4483-a59b-3b98e4d7243f}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY ErrID : UDINT]]></Declaration>
+      <Get Name="Get" Id="{51b5d49a-1cae-4732-b724-91f243bbe935}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ErrID := receiver.nErrId;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="HasSocket" Id="{7148a542-dc0c-49a5-9be7-cb958f281b34}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY INTERNAL HasSocket : BOOL]]></Declaration>
+      <Get Name="Get" Id="{22ca1bca-86df-47e6-b8be-b3c322ab405a}">
+        <Declaration><![CDATA[
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HasSocket := __ISVALIDREF(_socket);]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsBusy" Id="{e18308e8-3773-48e6-8f08-ee68192687bf}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY PUBLIC IsBusy : BOOL]]></Declaration>
+      <Get Name="Get" Id="{f349775e-386f-42b6-a4ef-0ce4dddbb4eb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsBusy := receiver.bBusy;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsError" Id="{bf0709f2-3246-4614-aeac-c9b7947f1623}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY PUBLIC IsError : BOOL]]></Declaration>
+      <Get Name="Get" Id="{c660a272-5afb-4a16-ba13-3a75a2dd9a49}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsError := receiver.bError;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="SetSocket" Id="{1d95d595-33e7-435d-9e7b-bb188bc62db5}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD INTERNAL SetSocket : BOOL
+VAR_IN_OUT
+  socket : T_HSOCKET;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_socket REF= socket;
+_log.LogDebug('SetSocket := TRUE');
+SetSocket := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Start" Id="{f558ae68-0893-4c92-866c-02879431fee8}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Start // starts receiving
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[execute := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Stop" Id="{485bcfdc-8a1f-49ad-97b1-9dccb435ae07}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Stop // stops receiving. Must be called if socket dies.]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[execute := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetBuffer" Id="{154ec164-d1a6-427d-a0fe-1dc4e672a555}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetBuffer : BOOL
+VAR_IN_OUT
+  result : RecvBuffer;
+END_VAR
+VAR_OUTPUT
+  receiveLength : UDINT;
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT HasSocket THEN
+  _log.LogError('Cannot Receive as NOT HasSocket');
+  RETURN;
+
+END_IF
+
+TryGetBuffer := THIS^.receiveLength > 0;
+
+IF NOT TryGetBuffer THEN
+  RETURN;
+  
+END_IF
+
+result := receiveBuffer; // copy by val into referenced buffer
+receiveLength := THIS^.receiveLength;
+
+THIS^.receiveLength := 0;
+MEMSET(ADR(receiveBuffer), 0, SIZEOF(receiveBuffer));]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="T_TcpRecieve">
+      <LineId Id="3" Count="27" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpRecieve.CyclicLogic">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpRecieve.ErrID.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpRecieve.HasSocket.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpRecieve.IsBusy.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpRecieve.IsError.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpRecieve.SetSocket">
+      <LineId Id="3" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpRecieve.Start">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpRecieve.Stop">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcpRecieve.TryGetBuffer">
+      <LineId Id="3" Count="16" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

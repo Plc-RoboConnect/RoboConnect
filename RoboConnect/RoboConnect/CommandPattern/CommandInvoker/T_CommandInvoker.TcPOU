@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_CommandInvoker" Id="{284490e9-a282-4ae0-81ff-39283e67a745}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_CommandInvoker EXTENDS T_NamedBase IMPLEMENTS I_CommandInvoker
+VAR
+  _commandQueue : I_CommandQueue;
+  currentCmd : I_Task;
+  
+  state, prevState : (IDLE_STATE, GET_COMMAND, PROCESSING_STATE, ERROR_STATE) := IDLE_STATE;
+  initialised : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Methods" Id="{e521ab56-6a39-4e10-8f58-248d18c7733e}" />
+    <Folder Name="Private" Id="{2ca2c215-25a1-4974-b75f-8afbdd614f02}" />
+    <Folder Name="Properties" Id="{81f156f7-0e1d-4352-9c9d-91f3c14e4d7e}" />
+    <Method Name="CyclicLogic" Id="{613cd9fa-2eab-4fed-a024-e26149687420}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC CyclicLogic
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT initialised THEN
+  RETURN;
+END_IF
+
+StateMachine();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Error" Id="{145f7fdc-d96e-4b87-a7f8-91e7a5281c3e}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY PUBLIC Error : BOOL]]></Declaration>
+      <Get Name="Get" Id="{1a47327a-80f2-4894-8f0e-71b28bafcdf3}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Error := (STATE = ERROR_STATE);]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Idle" Id="{5162eb79-5a24-416b-9660-b17fe1883dd7}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY PUBLIC Idle : BOOL]]></Declaration>
+      <Get Name="Get" Id="{17d3595b-787e-4817-8ba8-e93080effbeb}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Idle := (STATE = IDLE_STATE);]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Initialise" Id="{922e36fe-7e8a-4a61-ae4b-07f4e809c5a0}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC Initialise : BOOL
+VAR_INPUT
+  commandQueue : I_CommandQueue;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF commandQueue = 0 THEN
+  LogError('command queue = 0');
+  RETURN;
+END_IF
+
+LogInfo('command queue initlaised');
+_commandQueue := commandQueue;
+
+initialised := TRUE;
+Initialise := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Processing" Id="{aa929904-bc0a-4138-a56c-b562d67de825}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY PUBLIC Processing : BOOL]]></Declaration>
+      <Get Name="Get" Id="{5ebb08e6-ddf8-463c-91a5-5e95949e148a}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Processing := (state = PROCESSING_STATE OR STATE = GET_COMMAND);]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Reset" Id="{5dccd8c1-7a08-4893-a164-e735d9c7e783}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC Reset
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[state := IDLE_STATE;
+_commandQueue.Clear();
+currentCmd := 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StateChanged" Id="{e323c704-c3bd-4d64-aea1-b13b203bb45e}" FolderPath="Private\">
+      <Declaration><![CDATA[METHOD PRIVATE StateChanged : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF  state = prevState THEN
+  RETURN;
+END_IF
+
+prevState := state;
+StateChanged := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StateMachine" Id="{47b697f6-4b7e-4114-9989-224ef356624a}" FolderPath="Private\">
+      <Declaration><![CDATA[METHOD PRIVATE StateMachine
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF currentCmd <> 0 THEN
+  currentCmd.CyclicLogic();
+END_IF
+
+CASE state OF
+  IDLE_STATE:
+    stateChanged();
+
+    IF _commandQueue.Count > 0 THEN
+      state := GET_COMMAND;
+    END_IF
+
+  GET_COMMAND:
+    StateChanged();
+
+    IF _commandQueue.GetNext(output_command => currentCmd) THEN
+      state := PROCESSING_STATE;
+    END_IF
+
+  PROCESSING_STATE:
+
+    IF StateChanged() THEN
+      
+      IF currentCmd = 0 THEN
+        LogError('Command invoker target task is null');
+        state := ERROR_STATE;
+        RETURN;
+
+      ELSE
+        currentCmd.Execute();
+
+      END_IF
+      
+    ELSIF currentCmd.Done THEN
+      state := IDLE_STATE;
+      
+    END_IF
+
+  ERROR_STATE:
+    StateChanged();
+
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="T_CommandInvoker">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandInvoker.CyclicLogic">
+      <LineId Id="3" Count="3" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandInvoker.Error.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandInvoker.Idle.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandInvoker.Initialise">
+      <LineId Id="3" Count="8" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandInvoker.Processing.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandInvoker.Reset">
+      <LineId Id="3" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandInvoker.StateChanged">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandInvoker.StateMachine">
+      <LineId Id="3" Count="40" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

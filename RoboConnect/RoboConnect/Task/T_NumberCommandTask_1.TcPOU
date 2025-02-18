@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_NumberCommandTask_1" Id="{8342416d-e60b-4957-8e0f-8456f67af4e5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_NumberCommandTask_1 EXTENDS T_MockCommandTask IMPLEMENTS I_NumberResultTask
+VAR
+  _result : LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Result" Id="{7e8a2101-fe46-4137-aa9f-a1b31710014a}">
+      <Declaration><![CDATA[PROPERTY Result : LREAL
+]]></Declaration>
+      <Get Name="Get" Id="{1fb92c21-dd6a-4f6d-85e5-3a84b816d3bb}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Result := _result;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="SetResultValue" Id="{5d427fa2-6314-4a40-a856-79cdedeb2fc4}">
+      <Declaration><![CDATA[METHOD PUBLIC SetResultValue
+VAR_INPUT
+  value : LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_result := value;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="T_NumberCommandTask_1">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_NumberCommandTask_1.Result.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_NumberCommandTask_1.SetResultValue">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

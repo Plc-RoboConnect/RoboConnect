@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="T_CommandQueue_ClearWithAllPriority_ReturnTrue" Id="{68423d42-c1bf-4164-a83d-916b19b280b8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_CommandQueue_ClearWithAllPriority_ReturnTrue EXTENDS T_UnitTestBase
+VAR
+  commandLow : T_CommandTask;
+  commandNormal : T_CommandTask;
+  commandHigh : T_CommandTask;
+  
+  commandQueue : T_CommandQueue;
+  myTestState, prevState : (ARRANGE, ACT, ASSERT);
+  actual : UINT;
+  expected : UINT;
+END_VAR
+		]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE myTestState OF
+  ARRANGE:
+	commandQueue.AddHighPriority(commandHigh);
+	commandQueue.AddNormalPriority(commandNormal);
+  	commandQueue.AddLowPriority(commandLow);
+	myTestState := ACT;
+	
+  ACT:
+    commandQueue.clear();
+	myTestState := ASSERT;
+	
+  ASSERT:
+    assertion.AssertEquals_UINT(expected, actual, 'commandQueue.clear all Priority = TRUE');
+    myTestState := ARRANGE;
+    TestFinished();
+END_CASE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

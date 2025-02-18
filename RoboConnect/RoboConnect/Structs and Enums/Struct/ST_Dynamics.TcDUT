@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="ST_Dynamics" Id="{304e4601-fb73-42f1-8555-efd083442923}">
+    <Declaration><![CDATA[TYPE ST_Dynamics :
+STRUCT
+  Velocity : LREAL;
+  Accleration : LREAL;
+  Deceleration : LREAL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

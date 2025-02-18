@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_RoboConnect_Enable_RobotEnabled" Id="{9a50edd7-1b34-4c32-aa9b-2a7aa64e8fc3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_RoboConnect_Enable_RobotEnabled EXTENDS T_UnitTestBase
+VAR
+  _robot : I_RoboConnect;
+  myTestState, prevState : (ARRANGE, ACT, ASSERT);
+  actual : STRING;
+  expected : STRING := '0';
+  resultTask : I_Task;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE myTestState OF
+  ARRANGE:
+    StateChanged();
+    myTestState := ACT;
+
+  ACT:
+  IF StateChanged() THEN
+    _robot.Enable(task => resultTask);
+    
+	ELSIF NOT resultTask.Busy THEN
+        myTestState := ASSERT;
+  END_IF
+  
+  ASSERT:
+    actual := resultTask.ErrorId;
+    assertion.AssertEquals_STRING(expected, actual, 'actual := _robot.Enabled;');
+    myTestState := ARRANGE;
+    TestFinished();
+END_CASE]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{65e75648-f731-4da3-846d-dc8f195aa771}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+  bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+  bInCopyCode : BOOL; // if TRUE, the instance afterwards gets moved into the copy code (online change)
+  TestSuite : I_TestSuite;
+  robot : I_TcRobot;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_robot := robot;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StateChanged" Id="{a774d502-a52d-4074-9b02-c30dc15147f6}">
+      <Declaration><![CDATA[METHOD PRIVATE StateChanged : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF  myTestState = prevState THEN
+  RETURN;
+END_IF
+
+prevState := myTestState;
+StateChanged := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WaitForCycles" Id="{b5a4e1e1-cf33-4121-a3bf-2d114269b329}">
+      <Declaration><![CDATA[METHOD WaitForCycles : BOOL
+VAR_INPUT
+  maxCount : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[counter := counter + 1;
+
+IF counter = maxCount THEN
+  counter := 0;
+  WaitForCycles := TRUE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="T_RoboConnect_Enable_RobotEnabled">
+      <LineId Id="3" Count="17" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_RoboConnect_Enable_RobotEnabled.FB_init">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_RoboConnect_Enable_RobotEnabled.StateChanged">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_RoboConnect_Enable_RobotEnabled.WaitForCycles">
+      <LineId Id="3" Count="5" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

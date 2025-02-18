@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_NumberResultTask" Id="{d013598f-aacd-422e-9360-e2f40fdeb828}">
+    <Declaration><![CDATA[INTERFACE I_NumberResultTask EXTENDS I_Task
+]]></Declaration>
+    <Property Name="Result" Id="{c980e198-8214-4e7d-83b9-984b817d2b6c}">
+      <Declaration><![CDATA[PROPERTY Result : LREAL]]></Declaration>
+      <Get Name="Get" Id="{aaeef270-63ca-4787-8568-f31eff2ae96c}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

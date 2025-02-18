@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_TaskPool" Id="{20b53376-c05b-46c9-956c-bc2d71880f92}">
+    <Declaration><![CDATA[INTERFACE I_TaskPool
+]]></Declaration>
+    <Method Name="FreeAllTasks" Id="{1420144b-8dd5-4774-aff1-c53a2528f5e1}">
+      <Declaration><![CDATA[METHOD PUBLIC FreeAllTasks
+]]></Declaration>
+    </Method>
+    <Method Name="GetTask" Id="{7827d7f3-7258-4cb4-9452-9e70314da73b}">
+      <Declaration><![CDATA[METHOD PUBLIC GetTask : BOOL
+VAR_OUTPUT
+  result : I_CommandTask;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

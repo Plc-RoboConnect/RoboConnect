@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="RoboConnectParams" Id="{c8eefda0-577a-4804-a57d-129301a69a2f}" ParameterList="True">
+    <Declaration><![CDATA[VAR_GLOBAL CONSTANT
+	receiveBufferSize : UINT := 2048;
+	TimeOut : TIME := T#25S;
+	MAX_TASK_SIZE : UINT := 20;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

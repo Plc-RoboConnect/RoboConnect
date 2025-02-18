@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="MAIN" Id="{d7c3afa6-5249-0304-15d3-587d33cdd1f5}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+  // Robot
+  robot : T_MockRoboConnect;
+  connectionTime : TIME := T#0.23S; // duration of simulated connection, for mock
+  responseTime : TIME := T#0.8S;
+  initialised : BOOL;
+
+  testRunner : T_TestRunner;
+
+  // Task Tests
+  taskTestSuite : T_TestSuite;
+  TaskBase_TaskDone_True : T_TaskBase_TaskDone_True(taskTestSuite);
+  
+  // CommandInvoker Tests
+  commandInvokerTestSuite : T_testSuite;
+  CommandInvoker_InvokesCommand_True : T_CommandInvoker_InvokesCommand_ProcessingTrue(commandInvokerTestSuite);
+  
+  // CommandQueueTests
+  commandQueueTestSuite : T_TestSuite;
+
+  CommandQueue_AddLowPriority_ReturnTrue : T_CommandQueue_AddLowPriority_ReturnTrue(commandQueueTestSuite);
+  CommandQueue_AddNormalPriority_ReturnTrue : T_CommandQueue_AddNormalPriority_ReturnTrue(commandQueueTestSuite);
+  CommandQueue_AddHighPriority_ReturnTrue : T_CommandQueue_AddHighPriority_ReturnTrue(commandQueueTestSuite);
+
+  CommandQueue_AddHighPriority_QueueIncrementBy1 : T_CommandQueue_AddHighPriority_QueueIncrementedBy1(commandQueueTestSuite);
+  CommandQueue_AddNormalPriority_QueueIncrementBy1 : T_CommandQueue_AddNormalPriority_QueueIncrementedBy1(commandQueueTestSuite);
+  CommandQueue_AddLowPriority_QueueIncrementBy1 : T_CommandQueue_AddLowPriority_QueueIncrementedBy1(commandQueueTestSuite);
+
+  CommandQueue_ClearWithHighPriority_ReturnTrue : T_CommandQueue_ClearWithHighPriority_ReturnTrue(commandQueueTestSuite);
+  CommandQueue_ClearWithNormalPriority_ReturnTrue : T_CommandQueue_ClearWithNormalPriority_ReturnTrue(commandQueueTestSuite);
+  CommandQueue_ClearWithLowPriority_ReturnTrue : T_CommandQueue_ClearWithLowPriority_ReturnTrue(commandQueueTestSuite);
+  CommandQueue_ClearWithAllPriority_ReturnTrue : T_CommandQueue_ClearWithAllPriority_ReturnTrue(commandQueueTestSuite);
+
+  CommandQueue_GetNextCommandHighPriority_ReturnTrue : T_CommandQueue_GetNextCommandHighPriority_ReturnTrue(commandQueueTestSuite);
+  CommandQueue_GetNextCommandNormalPriority_ReturnTrue : T_CommandQueue_GetNextCommandNormalPriority_ReturnTrue(commandQueueTestSuite);
+  CommandQueue_GetNextCommandLowPriority_ReturnTrue : T_CommandQueue_GetNextCommandLowPriority_ReturnTrue(commandQueueTestSuite);
+  CommandQueue_GetNextCommanHighPriorityWithNormalPriority_ReturnTrue :T_CommandQueue_GetNextCommanHighPriorityWithNormalPriority_ReturnTrue(commandQueueTestSuite);
+  CommandQueue_GetNextCommandNormalPriorityWithLowPriority_ReturnTrue :T_CommandQueue_GetNextCommandNormalPriorityWithLowPriority_ReturnTrue(commandQueueTestSuite);
+
+  CommandQueue_MobjectQueue_AddItem_AddsItem : T_MobjectQueue_AddItem_AddsItem(commandQueueTestSuite);
+
+  // RoboConnect Tests
+  RoboConnectTestSuite : T_TestSuite;
+  RoboConnect_WhenCalledWithLowTimeout_FailsConnection :
+    T_RoboConnect_WhenCalledWithLowTimeout_FailsConnection(TestSuite := RoboConnectTestSuite, robot := robot, timeout := connectionTime - T#0.1S);
+  RoboConnect_WhenCalled_IsConnectedTrue :
+    T_RoboConnect_WhenCalled_IsConnectedTrue(TestSuite := RoboConnectTestSuite, robot := robot, timeout := connectionTime + T#0.1S);
+
+  RoboConnect_SetAnalogOutput_IncorrectIndexFails : T_RoboConnect_SetAnalogOutput_IncorrectIndexFails(RoboConnectTestSuite, robot := robot, 999);
+  RoboConnect_SetDigitalOutput_IncorrectIndexFails : T_RoboConnect_SetDigitalOutput_IncorrectIndexFails(RoboConnectTestSuite, robot := robot, 999);
+  RoboConnect_SetToolAnalogOutput_IncorrectIndexFails : T_RoboConnect_SetToolAnalogOutput_IncorrectIndexFails(RoboConnectTestSuite, robot := robot, 999);
+  RoboConnect_SetToolDigitalOutput_IncorrectIndexFails : T_RoboConnect_SetToolDigitalOutput_IncorrectIndexFails(RoboConnectTestSuite, robot := robot, 999);
+  RoboConnect_GetAnalogOutput_IncorrectIndexFails : T_RoboConnect_GetAnalogOutput_IncorrectIndexFails(RoboConnectTestSuite, robot := robot, 999);
+  RoboConnect_GetDigitalOutput_IncorrectIndexFails : T_RoboConnect_GetDigitalOutput_IncorrectIndexFails(RoboConnectTestSuite, robot := robot, 999);
+  RoboConnect_GetToolAnalogOutput_IncorrectIndexFails : T_RoboConnect_GetToolAnalogOutput_IncorrectIndexFails(RoboConnectTestSuite, robot := robot, 999);
+  RoboConnect_GetToolDigitalOutput_IncorrectIndexFails : T_RoboConnect_GetToolDigitalOutput_IncorrectIndexFails(RoboConnectTestSuite, robot := robot, 999);
+
+  RoboConnect_SetAnalogOutput_CorrectIndexPasses : T_RoboConnect_SetAnalogOutput_CorrectIndexPasses(RoboConnectTestSuite, robot := robot, 1);
+  RoboConnect_SetDigitalOutput_CorrectIndexPasses : T_RoboConnect_SetDigitalOutput_CorrectIndexPasses(RoboConnectTestSuite, robot := robot, 1);
+  RoboConnect_SetToolAnalogOutput_CorrectIndexPasses : T_RoboConnect_SetToolAnalogOutput_CorrectIndexPasses(RoboConnectTestSuite, robot := robot, 1);
+  RoboConnect_SetToolDigitalOutput_CorrectIndexPasses : T_RoboConnect_SetToolDigitalOutput_CorrectIndexPasses(RoboConnectTestSuite, robot := robot, 1);
+  RoboConnect_GetAnalogOutput_CorrectIndexPasses : T_RoboConnect_GetAnalogOutput_CorrectIndexPasses(RoboConnectTestSuite, robot := robot, 1);
+  RoboConnect_GetDigitalOutput_CorrectIndexPasses : T_RoboConnect_GetDigitalOutput_CorrectIndexPasses(RoboConnectTestSuite, robot := robot, 1);
+  RoboConnect_GetToolAnalogOutput_CorrectIndexPasses : T_RoboConnect_GetToolAnalogOutput_CorrectIndexPasses(RoboConnectTestSuite, robot := robot, 1);
+  RoboConnect_GetToolDigitalOutput_CorrectIndexPasses : T_RoboConnect_GetToolDigitalOutput_CorrectIndexPasses(RoboConnectTestSuite, robot := robot, 1);
+
+  RoboConnect_GetDigitalOutput_ReturnsTrueOutput : T_RoboConnect_SetDigitalOutput_CorrectIndexPasses(RoboConnectTestSuite, robot, 1);
+  RoboConnect_SetDigitalOutputTimeout_Fails : T_RoboConnect_SetDigitalOutputTimeout_Fails(RoboConnectTestSuite, robot, 1, T#1S);
+  RoboConnect_GetToolDigitalOutput_ReturnsTrueOutput : T_RoboConnect_SetDigitalOutput_CorrectIndexPasses(RoboConnectTestSuite, robot, 1);
+  RoboConnect_SetToolDigitalOutputTimeout_Fails : T_RoboConnect_SetDigitalOutputTimeout_Fails(RoboConnectTestSuite, robot, 1, T#1S);
+  RoboConnect_GetAnalogOutput_ReturnsTrueOutput : T_RoboConnect_SetAnalogOutput_CorrectIndexPasses(RoboConnectTestSuite, robot, 1);
+  RoboConnect_SetAnalogOutputTimeout_Fails : T_RoboConnect_SetToolAnalogOutput_TimeoutFails(RoboConnectTestSuite, robot, 1, T#1S);
+  RoboConnect_GetToolAnalogOutput_ReturnsTrueOutput : T_RoboConnect_SetAnalogOutput_CorrectIndexPasses(RoboConnectTestSuite, robot, 1);
+  RoboConnect_SetToolAnalogOutputTimeout_Fails : T_RoboConnect_SetToolAnalogOutput_TimeoutFails(RoboConnectTestSuite, robot, 1, T#1S);
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF NOT initialised THEN
+  robot.SetConnectionTime(connectionTime);
+  robot.SetGeneralCommandResponseDuration(responseTime);
+  initialised := TRUE;
+END_IF
+
+IF testRunner.ReloadTests THEN
+  testRunner.ClearTests();
+  testRunner.AddTestSuite(taskTestSuite);
+  testRunner.AddTestSuite(RoboConnectTestSuite);  
+  testRunner.AddTestSuite(commandQueueTestSuite);
+  testRunner.ReloadTests := FALSE;
+
+END_IF
+
+testRunner();
+robot.CyclicLogic();]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="3" Count="15" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

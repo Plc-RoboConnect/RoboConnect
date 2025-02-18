@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="T_MockTask" Id="{43a05129-dd0e-4806-bc27-45cfa44f475a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_MockTask IMPLEMENTS I_Task
+VAR_INPUT
+  _busy : BOOL;
+  _done : BOOL;
+  _error : BOOL;
+END_VAR
+VAR
+  state, prevState : (IDLE_STATE, BUSY_STATE, DONE_STATE, ERROR_STATE);
+  counter : UINT := 0;
+  cycleCount : UINT := 0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Abort" Id="{aeaaf20e-1dba-4044-a2a5-a6790b75bb15}">
+      <Declaration><![CDATA[METHOD Abort
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// no op]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Available" Id="{68f0a419-ef81-4d1d-8746-fd1c7edec15a}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY Available : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{5614d75b-9a84-4002-95b7-421e16d8a277}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Busy" Id="{14358a0e-f9ec-4a61-8586-1bb908feca6f}">
+      <Declaration><![CDATA[PROPERTY Busy : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{25afbc35-26ad-419f-8cfd-d6944eab2a89}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Busy := _busy;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="CauseError" Id="{426cbcf7-5f78-4956-a3bd-ae341fa1054a}">
+      <Declaration><![CDATA[METHOD PUBLIC CauseError
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[state := ERROR_STATE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CyclicLogic" Id="{08e12be7-fac3-4c20-aa7e-4323956f8553}">
+      <Declaration><![CDATA[METHOD PUBLIC CyclicLogic
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE state OF
+  IDLE_STATE:
+    IF StateChanged() THEN
+      _Busy := FALSE;
+      _Done := FALSE;
+      _Error := FALSE;
+    END_IF
+    
+  BUSY_STATE:
+    IF StateChanged() THEN
+      _Busy := TRUE;
+      _Done := FALSE;
+      _Error := FALSE;
+    END_IF
+
+    IF NOT WaitForCycles(cycleCount) THEN
+      RETURN;
+    END_IF
+
+    state := DONE_STATE;
+
+  DONE_STATE:
+    IF StateChanged() THEN
+      _Busy := FALSE;
+      _Done := TRUE;
+      _Error := FALSE;
+    END_IF
+
+  ERROR_STATE:
+    IF StateChanged() THEN
+      _Error := TRUE;
+      _Busy := FALSE;
+      _Done := FALSE;
+    END_IF
+
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Done" Id="{58c7844b-ed72-44bf-88a9-7f91052c7931}">
+      <Declaration><![CDATA[PROPERTY Done : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{01b0135c-7796-4213-b5b0-69a041d02f51}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Done := _done;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="DoSomething" Id="{801f9f38-d8ce-4ba0-9d6e-b5e47aceffec}">
+      <Declaration><![CDATA[METHOD PUBLIC DoSomething : I_Task
+VAR_INPUT
+  busyCycles : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[state := BUSY_STATE;
+cycleCount := busyCycles;
+DoSomething := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Error" Id="{007f92b7-0637-4039-8ff8-aac93fabbd50}">
+      <Declaration><![CDATA[PROPERTY Error : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{2d2574a8-79df-4e54-bb49-cc07d48f9e90}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Error := _error;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ErrorId" Id="{8cf4a52d-3206-4ea8-b2f7-fae176174b25}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY ErrorId : STRING
+]]></Declaration>
+      <Get Name="Get" Id="{79016913-a789-4cb7-ade6-1968b45dc697}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Execute" Id="{dd8509dd-9503-4514-a63c-450341e033ce}">
+      <Declaration><![CDATA[METHOD Execute : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// no ops]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Free" Id="{80c9c330-88a7-4772-9cdb-f4e5b430648b}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD Free
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StateChanged" Id="{c26c9b0f-b443-4f87-827f-ae41025c6cbe}">
+      <Declaration><![CDATA[METHOD PRIVATE StateChanged : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF  state = prevState THEN
+  RETURN;
+END_IF
+
+prevState := state;
+StateChanged := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Timeout" Id="{243e1fde-411e-4bcf-919a-f4825bc10afe}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY Timeout : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{85347383-eb06-4d7e-9118-62b21cc22010}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="WaitForCycles" Id="{ab9c58c6-8236-4eb0-b571-4567a7f2f18a}">
+      <Declaration><![CDATA[METHOD PRIVATE WaitForCycles : BOOL
+VAR_INPUT
+  maxCount : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[counter := counter + 1;
+
+IF counter = maxCount THEN
+  counter := 0;
+  WaitForCycles := TRUE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

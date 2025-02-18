@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.59" ClassName="CNestedPlcProjDef">
+	<Project Disabled="true" GUID="{69408E93-A7FC-45E7-B2FA-ABF32A7A746A}" Name="RoboConnect_Tests" PrjFilePath="..\..\RoboConnect_Tests\RoboConnect_Tests.plcproj" TmcFilePath="..\..\RoboConnect_Tests\RoboConnect_Tests.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="RoboConnect_Tests\RoboConnect_Tests.tmc" TmcHash="{2B8CA0EC-367C-37FE-22E1-87B557ACE8D7}">
+			<Name>RoboConnect_Tests Instance</Name>
+			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+			<Contexts>
+				<Context>
+					<Id>1</Id>
+					<Name>Default</Name>
+				</Context>
+			</Contexts>
+		</Instance>
+	</Project>
+</TcSmItem>

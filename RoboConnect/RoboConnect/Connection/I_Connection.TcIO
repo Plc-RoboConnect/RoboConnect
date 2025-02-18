@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Connection" Id="{7f06eca4-3d75-46e7-ab6d-af1eab3c2670}">
+    <Declaration><![CDATA[INTERFACE I_Connection
+]]></Declaration>
+    <Folder Name="Methods" Id="{5ab7b206-08a1-4c5d-9176-96775f2cecbf}" />
+    <Folder Name="Properties" Id="{c1daa5e3-0a0a-43fe-beb2-a91f12e45b13}" />
+    <Method Name="Connect" Id="{210a4025-aee8-490c-9708-e8778626f6e5}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Connect 
+VAR_INPUT
+  ip : T_IPv4Addr;
+  port : UINT;
+  timeout : TIME;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Disconnect" Id="{3db57b4b-2473-4859-a5db-cb769761ec42}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Disconnect
+
+]]></Declaration>
+    </Method>
+    <Property Name="ErrID" Id="{f1576e72-7b69-45ee-9e26-5cb3e8263515}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY ErrID : UDINT]]></Declaration>
+      <Get Name="Get" Id="{39550e14-1328-4587-b95e-c20e2c269d8a}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="ErrorReceive" Id="{3dd2d9c8-b30c-4721-bd52-bc69023b2b94}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD ErrorReceive : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="IsBusy" Id="{3bbe9510-f186-423b-971c-40743ad676f4}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY IsBusy : BOOL]]></Declaration>
+      <Get Name="Get" Id="{e4ab09c7-8342-4f85-9401-ef751eb87319}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsConnected" Id="{fb00e376-2e79-4b32-9843-b9116071b1d1}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY IsConnected : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ee8d1d8a-f0cb-4df8-a5d5-ade43cf7088d}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsErrorConnect" Id="{f3ea80d0-9691-4827-b2d8-1632eb4269c9}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY IsErrorConnect : Bool]]></Declaration>
+      <Get Name="Get" Id="{79eef76d-5ee4-4fe9-9c9e-2838b7fc8b5c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsErrorReceive" Id="{5e6bb4f7-9743-4af5-b57c-f24ceaa3ef13}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY IsErrorReceive : Bool]]></Declaration>
+      <Get Name="Get" Id="{4b49cf59-9193-44ee-987d-2772b67c6da0}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="IsErrorSend" Id="{7af67dce-7ffe-44a8-95f7-6d75c4199e89}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY IsErrorSend : Bool]]></Declaration>
+      <Get Name="Get" Id="{569202b1-05f7-45dc-9a6e-e3754ad77064}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Receive" Id="{ae24dc6e-e497-4b74-8f40-9fd8bcbfd88f}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Receive : BOOL // TRUE if new data recieved.
+VAR_OUTPUT 
+  data : ARRAY [1..RoboConnectParams.receiveBufferSize] OF BYTE;  // Contents of received buffer
+  receiveLength : UDINT; // length of data received.
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Send" Id="{31fd1f8f-1bf8-4435-9652-0cac36781f1e}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Send : BOOL
+VAR_INPUT
+  message : T_Maxstring;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="SendDone" Id="{fa82fc90-4276-43c2-830e-1762973529c8}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY PUBLIC SendDone : BOOL]]></Declaration>
+      <Get Name="Get" Id="{eab726d2-72a8-41bf-9aaf-24d842e7b325}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

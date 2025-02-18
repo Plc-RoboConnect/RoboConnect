@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_MockNumberCommandTask" Id="{c4b4e451-f370-4703-94b5-7d62d9b1c95d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_MockNumberCommandTask IMPLEMENTS I_NumberResultTask
+VAR_INPUT
+  _Busy, _Done, _Error, _Timeout : BOOL;
+  _Result : LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Abort" Id="{c650fcad-4301-4238-b126-680f55041cbb}">
+      <Declaration><![CDATA[METHOD Abort
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Available" Id="{56da4a8e-a5ae-4aab-ae87-ec2b15a18fc6}">
+      <Declaration><![CDATA[PROPERTY Available : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{7df23a0e-c48f-49ac-ae9f-b3593db904c8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Busy" Id="{72c90843-3c63-4da2-9393-dcb91570b44e}">
+      <Declaration><![CDATA[PROPERTY Busy : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{d9b4099c-f991-4541-825e-b7957299caa3}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Busy := _Busy;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="CyclicLogic" Id="{fa2ae519-8201-44d1-8710-f9947170a4d0}">
+      <Declaration><![CDATA[METHOD CyclicLogic
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Done" Id="{030e85d9-0e29-47d2-8ccf-d322f4e300f1}">
+      <Declaration><![CDATA[PROPERTY Done : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{736d6366-48e0-4555-abc9-a51a5699281f}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Done := _Done;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Error" Id="{48d37403-a39e-4a16-8663-73c985b8a52b}">
+      <Declaration><![CDATA[PROPERTY Error : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{5bffc08d-d734-4d55-8ec5-e1702df6fbec}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Error := _Error;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ErrorId" Id="{3e0e85d2-fbf4-4dce-8d66-ea33175aa12c}">
+      <Declaration><![CDATA[PROPERTY ErrorId : STRING
+]]></Declaration>
+      <Get Name="Get" Id="{1de7f265-5462-4327-bbd3-e76ce62be1bf}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Execute" Id="{515bc31e-479f-4fb8-9310-a221689dccc1}">
+      <Declaration><![CDATA[METHOD Execute : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Free" Id="{4765e9db-1340-4adf-aab2-4785b6036cb8}">
+      <Declaration><![CDATA[METHOD Free
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Result" Id="{4f59f975-8b8b-4e6f-9705-8fba422beb9c}">
+      <Declaration><![CDATA[PROPERTY Result : LREAL
+]]></Declaration>
+      <Get Name="Get" Id="{5f2cfd92-2a40-4d37-82a2-83afcc6cf8dc}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Result := _Result;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Timeout" Id="{a0367408-d28c-4fc7-a493-ff5cc1bbce82}">
+      <Declaration><![CDATA[PROPERTY Timeout : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{71bd9546-6b81-4425-869e-2ea66e778e37}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Timeout := _Timeout;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="T_MockNumberCommandTask">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockNumberCommandTask.Abort">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockNumberCommandTask.Available.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockNumberCommandTask.Busy.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockNumberCommandTask.CyclicLogic">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockNumberCommandTask.Done.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockNumberCommandTask.Error.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockNumberCommandTask.ErrorId.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockNumberCommandTask.Execute">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockNumberCommandTask.Free">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockNumberCommandTask.Result.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_MockNumberCommandTask.Timeout.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

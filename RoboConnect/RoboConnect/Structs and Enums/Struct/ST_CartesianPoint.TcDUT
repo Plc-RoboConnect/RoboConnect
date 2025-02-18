@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="ST_CartesianPoint" Id="{03d495c8-b7b1-4578-8869-2eb32cf9188e}">
+    <Declaration><![CDATA[TYPE ST_CartesianPoint :
+STRUCT
+  x : LREAL;
+  y : LREAL;
+  z : LREAL;
+  a : LREAL;
+  b : LREAL;
+  c : LREAL;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

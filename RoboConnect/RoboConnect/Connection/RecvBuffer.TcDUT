@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="RecvBuffer" Id="{8995419b-89be-4df0-9b2d-e271f0a62774}">
+    <Declaration><![CDATA[TYPE RecvBuffer : ARRAY[1..RoboConnectParams.receiveBufferSize] OF BYTE; END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

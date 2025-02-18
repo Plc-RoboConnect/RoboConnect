@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_TcRobot_GetDigitalOutput_IncorrectIndexFails" Id="{2595bfea-3253-4201-85bb-0670016d798f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_RoboConnect_GetDigitalOutput_IncorrectIndexFails EXTENDS T_UnitTestBase
+VAR
+  robot : I_RoboConnect;
+  targetDO : UINT;
+  myTestState, prevState :
+    (INIT, ARRANGE, ACT, ASSERT) := INIT;
+  expected : BOOL;
+  actual : BOOL := TRUE;
+  counter : UINT;
+  returnedTask : I_Task;
+  resultTask : I_BoolResultTask;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE myTestState OF
+  INIT:
+    StateChanged();
+    myTestState := ARRANGE;
+
+  ARRANGE:
+    IF StateChanged() THEN
+      expected := FALSE;
+      myTestState := ACT;
+    END_IF
+
+  ACT:
+    actual := robot.SetDigitalOutput(targetDO, TRUE, task => returnedTask);
+    myTestState := ASSERT;
+
+  ASSERT:
+    assertion.AssertEquals_BOOL(expected, actual, 'robot.SetDigitalOutput(targetDO, TRUE, task => returnedTask)');
+    TestFinished();
+    myTestState := INIT;
+
+END_CASE
+]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{721f4257-f1f3-4372-b356-290dc48b79a1}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+  bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+  bInCopyCode : BOOL; // if TRUE, the instance afterwards gets moved into the copy code (online change)
+  TestSuite : tcl_SimpleUnitTestLibrary.I_TestSuite;
+  robot : I_TcRobot;
+  targetDo : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.robot := robot;
+THIS^.targetDo := targetDo;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StateChanged" Id="{4b13a642-e18d-49a4-a499-8a03a696392a}">
+      <Declaration><![CDATA[METHOD PRIVATE StateChanged : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF  myTestState = prevState THEN
+  RETURN;
+END_IF
+
+prevState := myTestState;
+StateChanged := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WaitForCycles" Id="{7a1a8471-e170-45c5-a6b8-8f4b50437d6e}">
+      <Declaration><![CDATA[METHOD WaitForCycles : BOOL
+VAR_INPUT
+  maxCount : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[counter := counter + 1;
+
+IF counter = maxCount THEN
+  counter := 0;
+  WaitForCycles := TRUE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="T_TcRobot_GetDigitalOutput_IncorrectIndexFails">
+      <LineId Id="3" Count="20" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcRobot_GetDigitalOutput_IncorrectIndexFails.FB_init">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcRobot_GetDigitalOutput_IncorrectIndexFails.StateChanged">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TcRobot_GetDigitalOutput_IncorrectIndexFails.WaitForCycles">
+      <LineId Id="3" Count="5" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Task" Id="{06879b9e-5d97-4d9b-a2dc-57fe5da48e3f}">
+    <Declaration><![CDATA[INTERFACE I_Task EXTENDS __SYSTEM.IQueryInterface
+]]></Declaration>
+    <Folder Name="Methods" Id="{6816a4cb-eea1-4515-ad96-5a64460fa0df}" />
+    <Folder Name="Properties" Id="{a3467548-07e4-492a-864b-b38e5517bd58}" />
+    <Method Name="Abort" Id="{21ca12c6-2b9c-4060-a27c-f3cd5549fc6a}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Abort 
+]]></Declaration>
+    </Method>
+    <Property Name="Available" Id="{0fdbeec1-cc62-474f-801c-9a69b5c87f9e}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Available : BOOL]]></Declaration>
+      <Get Name="Get" Id="{f7f001bb-d9a6-457e-9ea1-d4833d7ea1d7}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Busy" Id="{c5019b36-6c55-426c-9c84-8e3e8b521037}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Busy : bool]]></Declaration>
+      <Get Name="Get" Id="{4d1f06e6-0d83-4752-a211-a4ed935d6c49}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="CyclicLogic" Id="{3fca97f5-ba17-4c76-95d6-f1e6d5092647}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD CyclicLogic
+]]></Declaration>
+    </Method>
+    <Property Name="Done" Id="{98d98e74-cac1-4684-81cb-bd83702b2ec2}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Done : bool]]></Declaration>
+      <Get Name="Get" Id="{f8728e1b-c5eb-4849-a6a7-cb5de895e34b}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Error" Id="{83c4cfa0-645e-49f4-9f2a-14e4ed9a00e9}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Error : bool]]></Declaration>
+      <Get Name="Get" Id="{15b59c52-a039-4320-977a-00b361c1a885}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="ErrorId" Id="{c2c1cc76-1a17-46b4-b4f2-6743ac878248}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY PUBLIC ErrorId : STRING]]></Declaration>
+      <Get Name="Get" Id="{a8c7891b-44fd-4b4a-b8c6-a0608791e7d7}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Execute" Id="{fdec8d95-194c-4fff-890e-bf447419e9e1}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC Execute : BOOL
+
+]]></Declaration>
+    </Method>
+    <Method Name="Free" Id="{6e385f10-52e5-47ec-8f30-8406f6d76654}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC Free
+
+]]></Declaration>
+    </Method>
+    <Property Name="Timeout" Id="{5a3f33bf-b3ba-4f80-9e87-65fd83b38b5e}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Timeout : BOOL]]></Declaration>
+      <Get Name="Get" Id="{766fd1b4-6514-4e9c-8a08-da12c6df0ee4}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

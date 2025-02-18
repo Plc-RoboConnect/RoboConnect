@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="T_TaskBase_TaskDone_True" Id="{6602f389-5a23-493a-9b2a-9f37e22e2d26}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_TaskBase_TaskDone_True EXTENDS T_UnitTestBase
+VAR
+  task : I_Task;
+  myTestState, prevState : (INIT, ARRANGE, ACT, ASSERT) := INIT;
+  taskRunner : T_MockTask;
+  actual, expected : BOOL;
+  counter : UINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[taskRunner.CyclicLogic();
+
+CASE myTestState OF
+  INIT:
+    StateChanged();
+    myTestState := ARRANGE;
+
+  ARRANGE:
+    StateChanged();
+    expected := TRUE;
+    myTestState := ACT;
+    
+  ACT:
+    IF StateChanged() THEN
+      task := taskRunner.DoSomething(20);
+    END_IF
+
+    IF NOT WaitForCycles(30) THEN
+      RETURN;
+    END_IF
+
+    myTestState := ASSERT;
+    
+  ASSERT:
+    actual := task.Done;
+    assertion.AssertEquals_BOOL(expected, actual, 'Task.Done = TRUE');
+    myTestState := INIT;
+    TestFinished();
+
+END_CASE]]></ST>
+    </Implementation>
+    <Method Name="StateChanged" Id="{ddf4d269-c83b-44b3-a29d-8c22289d293b}">
+      <Declaration><![CDATA[METHOD PRIVATE StateChanged : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF  myTestState = prevState THEN
+  RETURN;
+END_IF
+
+prevState := myTestState;
+StateChanged := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WaitForCycles" Id="{d10b86b9-a7c4-4935-9f1b-2b127efc2480}">
+      <Declaration><![CDATA[METHOD WaitForCycles : BOOL
+VAR_INPUT
+  maxCount : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[counter := counter + 1;
+
+IF counter = maxCount THEN
+  counter := 0;
+  WaitForCycles := TRUE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

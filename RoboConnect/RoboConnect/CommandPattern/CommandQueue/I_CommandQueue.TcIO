@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_CommandQueue" Id="{d17d58f0-25b0-4d16-92b4-42d6cd406eb9}">
+    <Declaration><![CDATA[INTERFACE I_CommandQueue
+]]></Declaration>
+    <Folder Name="Methods" Id="{96b875d2-f0f3-4fc0-b3ea-5c82621a2acd}" />
+    <Folder Name="Properties" Id="{92f1cf38-41d5-42c6-8016-52688c828db7}" />
+    <Method Name="AddHighPriority" Id="{b68d928d-f250-47b5-b67b-adc523136982}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD AddHighPriority : BOOL
+VAR_INPUT
+  cmd : I_Task; 
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="AddLowPriority" Id="{1aac3a2e-9574-4a11-8a4d-529438fefbe9}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD AddLowPriority : BOOL
+VAR_INPUT
+  cmd : I_Task; 
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="AddNormalPriority" Id="{5e78e856-4cbf-4d38-a03d-d6081db199af}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD AddNormalPriority : BOOL
+VAR_INPUT
+  cmd : I_Task; 
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Clear" Id="{8bb88b17-bd3b-45c5-b252-97af9d711c92}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Clear
+]]></Declaration>
+    </Method>
+    <Property Name="Count" Id="{8210da57-0c49-4d04-96e6-0d9e8a99cd0a}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Count : UINT]]></Declaration>
+      <Get Name="Get" Id="{8e6170b0-a3c6-43bd-be6c-04b7eff663d6}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="GetNext" Id="{5e0b391d-2785-409e-af65-06b0008cafe9}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD GetNext : BOOL;
+VAR_OUTPUT
+	output_command : I_Task;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

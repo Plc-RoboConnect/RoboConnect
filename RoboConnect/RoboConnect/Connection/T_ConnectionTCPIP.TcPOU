@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_ConnectionTCPIP" Id="{dfdbd582-0c2f-4b59-80e4-5d84cd3715d5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_ConnectionTCPIP EXTENDS T_NamedBase IMPLEMENTS I_Connection
+VAR
+	connection : T_TcpClientConnection;
+	sender : T_TcpSend;
+	receiver : T_TcpRecieve;
+	init : BOOL;
+	state : (IDLE, WORKING);
+  
+  IsConnectedTrigger : R_TRIG;
+  IsNotConnectedTrigger : F_TRIG;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Methods" Id="{b246d1b9-d86b-4dee-bfb8-bf8852170adb}" />
+    <Folder Name="Properties" Id="{696d23c4-bfc5-410e-92c8-70d9c2387824}" />
+    <Method Name="Connect" Id="{6fff02a0-134e-46fe-b8e6-d7dc6171bd6d}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Connect 
+VAR_INPUT
+  ip : T_IPv4Addr;
+  port : UINT;
+  timeout : TIME;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[connection.Connect(ip, port, timeout);
+LogInfo('Connecting');]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CyclicLogic" Id="{132d8014-9794-4a0e-9813-c917f683b470}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC CyclicLogic
+VAR_INST
+  trigConnected : R_TRIG;
+  isNotConnectedTrigger : F_TRIG;
+  trigErrReceive : R_TRIG;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT init THEN
+	init := TRUE;
+END_IF
+
+connection.CyclicLogic();
+trigConnected(CLK := connection.IsConnected);
+
+IF trigConnected.Q THEN
+	sender.SetSocket(connection.Socket);
+	receiver.SetSocket(connection.Socket);
+  receiver.Start();
+	LogDebug('Connected - setting socket on sender and receiver.');
+END_IF
+
+isNotConnectedTrigger(CLK := connection.IsConnected);
+IF isNotConnectedTrigger.Q THEN
+  receiver.Stop();
+END_IF
+
+IF NOT connection.IsConnected THEN
+ 	RETURN;
+END_IF
+
+sender.CyclicLogic();
+receiver.CyclicLogic();
+
+// If error detected on receive, need to try disconnecting and reconnecting
+trigErrReceive(CLK:= IsErrorReceive, Q=> );
+IF trigErrReceive.Q THEN
+	ErrorReceive();
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Disconnect" Id="{e1f68167-2fb7-4bed-a2f7-bf27332b2011}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Disconnect 
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[connection.Disconnect();
+LogInfo('Disconnecting');]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ErrID" Id="{edc96c3d-f9ae-4be2-8ecb-49f7931b19d8}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY ErrID : UDINT]]></Declaration>
+      <Get Name="Get" Id="{f75277bf-1f24-4abb-8eb1-b92635661e31}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF IsErrorConnect THEN
+	ErrID := connection.ErrID;
+ELSIF IsErrorSend THEN
+	ErrID := sender.ErrID;
+ELSIF IsErrorReceive THEN
+	ErrID := receiver.ErrID;
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ErrorReceive" Id="{de667186-f63c-40e2-b4f3-1a0025d7746d}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD ErrorReceive : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[LogError('Receive Error');
+Disconnect();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IsBusy" Id="{748064e5-625d-4fe8-9c92-4e7d7d234f20}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY IsBusy : BOOL]]></Declaration>
+      <Get Name="Get" Id="{c453cbda-0252-4943-9bc9-921ab58fcb3d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsBusy := connection.IsBusy OR sender.IsBusy OR receiver.IsBusy;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsConnected" Id="{cb8b73ce-4a0d-4feb-93d2-345ebecad54d}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY IsConnected : BOOL]]></Declaration>
+      <Get Name="Get" Id="{18778902-73d1-4ef8-b294-a4fce202d8d2}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsConnected := connection.IsConnected;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsErrorConnect" Id="{4acd44be-5275-467a-8eec-18fa71242114}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY IsErrorConnect : Bool]]></Declaration>
+      <Get Name="Get" Id="{691fca2f-6e91-4dda-89b1-e1ce595141cc}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsErrorConnect := connection.IsError;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsErrorReceive" Id="{2abadd84-c77d-49f9-8282-91c3f7c5d809}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY IsErrorReceive : BOOL]]></Declaration>
+      <Get Name="Get" Id="{24a43233-15d0-4a10-bcef-e40482d684a8}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsErrorReceive := receiver.IsError;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsErrorSend" Id="{7aa0ba27-18a4-4e50-ac57-e4020055c376}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY IsErrorSend : BOOL]]></Declaration>
+      <Get Name="Get" Id="{8729f01d-e697-4063-ba7a-8e643d083f15}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsErrorSend := sender.IsError;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Receive" Id="{2413eb5d-c13b-4da5-b312-face6dde8e72}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Receive : BOOL // TRUE if new data recieved.
+VAR_OUTPUT 
+  data : ARRAY [1..RoboConnectParams.receiveBufferSize] OF BYTE;  // Contents of received buffer
+  receiveLength : UDINT; // length of data received.
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT connection.IsConnected THEN
+  LogWarning('Cannot receive message, NOT connected');
+  RETURN;
+END_IF
+
+Receive :=
+  receiver.TryGetBuffer(
+    result := data,
+    receiveLength => receiveLength
+  );]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Send" Id="{69776a4d-48a5-44be-95ec-4125eb36f784}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Send : BOOL
+VAR_INPUT
+  message : T_Maxstring;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT connection.IsConnected THEN
+  LogWarning('Cannot send message, not connected');
+  RETURN;
+END_IF
+
+LogInfo(CONCAT('Sending message : ', message));
+sender.Send(message);
+Send := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="SendDone" Id="{67e5ce5b-36fc-4956-a2c0-0f36eb74b48d}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY PUBLIC SendDone : BOOL]]></Declaration>
+      <Get Name="Get" Id="{cb081cc7-2675-447a-97b3-d76e545704d9}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SendDone := NOT sender.IsBusy;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="T_ConnectionTCPIP">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_ConnectionTCPIP.Connect">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_ConnectionTCPIP.CyclicLogic">
+      <LineId Id="3" Count="29" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_ConnectionTCPIP.Disconnect">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_ConnectionTCPIP.ErrID.Get">
+      <LineId Id="3" Count="5" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_ConnectionTCPIP.ErrorReceive">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_ConnectionTCPIP.IsBusy.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_ConnectionTCPIP.IsConnected.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_ConnectionTCPIP.IsErrorConnect.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_ConnectionTCPIP.IsErrorReceive.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_ConnectionTCPIP.IsErrorSend.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_ConnectionTCPIP.Receive">
+      <LineId Id="3" Count="8" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_ConnectionTCPIP.Send">
+      <LineId Id="3" Count="6" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_ConnectionTCPIP.SendDone.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

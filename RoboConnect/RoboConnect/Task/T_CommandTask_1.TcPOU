@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_CommandTask_1" Id="{2dd28c1d-f307-46b2-8a0e-403f5f95e675}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_CommandTask_1 EXTENDS T_NamedBase IMPLEMENTS I_CommandTask
+VAR_INPUT
+  _busy : BOOL := FALSE;
+  _error : BOOL := FALSE;
+  _done : BOOL := FALSE;
+  _timeout : BOOL := FALSE;
+  _available : BOOL := TRUE;
+END_VAR
+VAR
+
+  _errorId : STRING;
+  _msg : T_Maxstring;
+  timeoutTimer : TON := (PT := TASK_TIMEOUT);
+
+  state, prevState : (UNINITLIASED,
+    INITALISED,
+    EXECUTING,
+    DONE_STATE,
+    ERROR_STATE);
+
+END_VAR
+VAR CONSTANT
+  TASK_TIMEOUT : TIME := RoboConnectParams.TimeOut;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Methods" Id="{337fc2b7-2f06-4a5b-a806-3a7f75d3c7c2}" />
+    <Folder Name="Properties" Id="{3237fbc7-8ab3-43c3-b261-0fd8e9f00262}" />
+    <Method Name="Abort" Id="{54a2fe59-c98c-46ea-9dbb-bb031e47ed33}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD Abort ]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Available" Id="{177d7b13-9340-459f-99f7-be5b758a2438}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Available : BOOL]]></Declaration>
+      <Get Name="Get" Id="{66aa528f-6a75-48ed-bafb-27928a902b68}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Available := _available;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Busy" Id="{2e99342e-f4bb-4953-8b7f-51033ebd516e}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Busy : BOOL]]></Declaration>
+      <Get Name="Get" Id="{e10fef3e-6908-45fc-a63f-17b3b0f71dac}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Busy := _Busy;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="CyclicLogic" Id="{17bf29db-11e8-4e39-9abd-1e92226f057d}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC CyclicLogic
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+
+
+CASE state OF
+  UNINITLIASED:
+    StateChanged();
+
+  INITALISED:
+    IF StateChanged() THEN
+      logInfo('task initlaised');
+    END_IF
+
+  EXECUTING:
+    IF StateChanged() THEN
+      LogInfo('task executing');
+      _busy := TRUE;
+      timeoutTimer.IN := TRUE;
+      
+      IF NOT _comPort.Send(_msg) THEN
+        state := ERROR_STATE;
+        RETURN;
+			END_IF
+      
+    END_IF
+    
+    IF timeoutTimer.Q THEN
+      state := ERROR_STATE;
+      LogError('Command timed out');
+		END_IF
+
+    IF _comPort.SendDone THEN
+      state := DONE_STATE;
+    END_IF
+
+  DONE_STATE:
+    IF StateChanged() THEN
+      LogInfo('task done');
+      _busy := FALSE;
+      _done := TRUE;
+      timeoutTimer.IN := FALSE;
+    END_IF
+
+  ERROR_STATE:
+    IF StateChanged() THEN
+      LogError('task error');
+      _error := TRUE;
+      _busy := FALSE;
+      _done := FALSE;
+    END_IF
+
+END_CASE
+
+timeoutTimer();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Done" Id="{b0e7c920-e5e2-4df3-92b2-87478b72b793}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Done : BOOL]]></Declaration>
+      <Get Name="Get" Id="{5c4fb14f-e7c5-424b-8f89-1219429a0898}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Done := _Done;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Error" Id="{b027741a-1151-44e4-a675-f64edefb3481}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Error : BOOL]]></Declaration>
+      <Get Name="Get" Id="{e2fb4877-17c8-41dd-8172-b5cad57c48dd}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Error := _Error;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ErrorId" Id="{07789dd5-e26d-4482-ac3d-674145c31ffc}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY PUBLIC ErrorId : string]]></Declaration>
+      <Get Name="Get" Id="{2c3ccd25-3c8a-4e5a-82f0-e4c111503ae7}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ErrorId := _errorId;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Execute" Id="{3715bb63-2d9a-4754-bf9e-ab02deacefb6}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC Execute : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF state <> INITALISED THEN
+  RETURN;
+END_IF
+
+state := EXECUTING;
+EXECUTE := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Free" Id="{1795554b-63f0-4959-b636-24940eb512ef}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC Free
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_Busy := FALSE;
+_Error := FALSE;
+_Done := FALSE;
+ _timeout := FALSE;
+ _available := TRUE;
+  
+_comPort := 0;
+_msg := '';]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Initalise" Id="{24d4a764-fc2d-4015-821d-e9b3a5b77c06}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PUBLIC Initalise : BOOL
+VAR_INPUT
+ msg : T_Maxstring;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_done := FALSE;
+_msg := msg;
+state := INITALISED;
+_available := FALSE;
+Initalise := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StateChanged" Id="{88d8ee72-edfe-4f97-b5e6-b699256336f5}" FolderPath="Methods\">
+      <Declaration><![CDATA[METHOD PRIVATE StateChanged : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF  state = prevState THEN
+  RETURN;
+END_IF
+
+prevState := state;
+StateChanged := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Timeout" Id="{9f974f10-1a28-4746-91f4-cbb08170d72b}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY Timeout : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{6e0179ef-9ea1-419e-8b3d-7d7c131191c2}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Timeout := _timeout;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="T_CommandTask_1">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandTask_1.Abort">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandTask_1.Available.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandTask_1.Busy.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandTask_1.CyclicLogic">
+      <LineId Id="3" Count="51" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandTask_1.Done.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandTask_1.Error.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandTask_1.ErrorId.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandTask_1.Execute">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandTask_1.Free">
+      <LineId Id="3" Count="6" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandTask_1.Initalise">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandTask_1.StateChanged">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_CommandTask_1.Timeout.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

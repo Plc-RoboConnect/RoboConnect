@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="T_CommandQueue_AddNormalPriority_QueueIncrementedBy1" Id="{d3e5093f-309b-41d7-bfa9-882a40b6614c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_CommandQueue_AddNormalPriority_QueueIncrementedBy1 EXTENDS T_UnitTestBase
+VAR
+  command : T_CommandTask;
+  commandQueue : T_CommandQueue;
+  myTestState, prevState : (ARRANGE, ACT, ASSERT);
+  actual : UINT;
+  expected : UINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE myTestState OF
+  ARRANGE:
+  	expected := commandQueue.Count +1;
+    myTestState := ACT;
+
+  ACT:
+    commandQueue.AddNormalPriority(command);
+	actual := commandQueue.Count;
+    myTestState := ASSERT;
+
+  ASSERT:
+    assertion.AssertEquals_UINT(expected, actual, 'queue.count = queue.count +1');
+    myTestState := ARRANGE;
+    TestFinished();
+END_CASE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

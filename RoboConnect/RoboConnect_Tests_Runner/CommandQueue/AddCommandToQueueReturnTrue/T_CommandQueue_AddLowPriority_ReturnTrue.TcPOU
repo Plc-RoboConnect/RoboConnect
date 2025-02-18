@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="T_CommandQueue_AddLowPriority_ReturnTrue" Id="{52c19bc7-9b3a-4d95-9f32-90304d9c8adb}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_CommandQueue_AddLowPriority_ReturnTrue EXTENDS T_UnitTestBase
+VAR
+  command : T_CommandTask;
+  commandQueue : T_CommandQueue;
+  myTestState, prevState : (ARRANGE, ACT, ASSERT);
+  actual : BOOL := TRUE;
+  expected : BOOL := TRUE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE myTestState OF
+  ARRANGE:
+    myTestState := ACT;
+
+  ACT:
+    actual := commandQueue.AddLowPriority(command);
+    myTestState := ASSERT;
+
+  ASSERT:
+    assertion.AssertEquals_BOOL(expected, actual, 'commandQueue.AddLowPriority = TRUE');
+    myTestState := ARRANGE;
+    TestFinished();
+END_CASE]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

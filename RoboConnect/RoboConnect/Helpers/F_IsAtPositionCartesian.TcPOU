@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="F_IsAtPositionCartesian" Id="{1229cfe9-c8b7-493f-ad8d-c311de47c79c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_IsAtPositionCartesian : BOOL
+VAR_INPUT
+  actual : ST_CartesianPoint;
+  target : ST_CartesianPoint;
+  delta : ST_CartesianPoint;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[F_IsAtPositionCartesian :=
+  (ABS(actual.x - target.x) < delta.x)
+    AND (ABS(actual.x - target.x) < delta.x)
+    AND (ABS(actual.y - target.y) < delta.y)
+    AND (ABS(actual.z - target.z) < delta.z)
+    AND (ABS(actual.a - target.a) < delta.a)
+    AND (ABS(actual.b - target.b) < delta.b)
+    AND (ABS(actual.c - target.c) < delta.c);]]></ST>
+    </Implementation>
+    <LineIds Name="F_IsAtPositionCartesian">
+      <LineId Id="3" Count="6" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

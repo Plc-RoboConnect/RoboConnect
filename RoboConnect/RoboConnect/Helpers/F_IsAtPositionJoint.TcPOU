@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="F_IsAtPositionJoint" Id="{d6526da3-44cd-40c3-9114-958574579872}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_IsAtPositionJoint : BOOL
+VAR_IN_OUT
+  actual : ARRAY[*] OF LREAL;
+  target : ARRAY[*] OF LREAL;
+  delta  : ARRAY[*] OF LREAL;
+END_VAR
+VAR
+  actLower, actUpper : DINT;
+  ind : DINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[actLower := LOWER_BOUND(actual, 1);
+actUpper := UPPER_BOUND(actual, 1); 
+
+IF actLower > LOWER_BOUND(target,1) OR actLower > LOWER_BOUND(delta, 1) THEN
+  F_LogWarning('actLower > LOWER_BOUND(target,1) OR actLower > LOWER_BOUND(delta, 1)');
+  RETURN;
+  
+END_IF
+
+IF actUpper > UPPER_BOUND(target,1) OR actLower > UPPER_BOUND(delta, 1) THEN
+  F_LogWarning('actUpper > UPPER_BOUND(target,1) OR actLower > UPPER_BOUND(delta, 1)');
+  RETURN;
+  
+END_IF
+
+FOR ind := actLower TO actUpper DO
+  F_IsAtPositionJoint := ABS(actual[ind] - target[ind]) < delta[ind];
+  
+  IF NOT F_IsAtPositionJoint THEN
+    // any failure means not in position.
+    RETURN;
+    
+	END_IF
+  
+END_FOR]]></ST>
+    </Implementation>
+    <LineIds Name="F_IsAtPositionJoint">
+      <LineId Id="3" Count="23" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

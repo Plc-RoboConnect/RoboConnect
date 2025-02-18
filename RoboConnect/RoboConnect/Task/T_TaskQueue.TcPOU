@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="T_TaskQueue" Id="{d42e591c-23cb-47dd-a483-0daed119ffae}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_TaskQueue EXTENDS T_NamedBase
+VAR
+  _items : ARRAY[1..QUEUE_SIZE] OF I_Task;
+  _count : UINT := 0;
+END_VAR
+VAR CONSTANT
+  QUEUE_SIZE : UINT := 10;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Clear" Id="{6bbed9c2-2f29-4885-8695-0422ca40b3a4}">
+      <Declaration><![CDATA[METHOD PUBLIC Clear 
+VAR
+	index : UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR index := 1 TO _count DO
+  _items[index].Abort();
+END_FOR
+
+_count := 0;
+MEMSET(ADR(_items), 0, SIZEOF(_items));]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Contains" Id="{5a1f0aeb-097f-4105-a8d5-33d9cf56098e}">
+      <Declaration><![CDATA[METHOD PUBLIC Contains : BOOL
+VAR_INPUT
+	Target : I_Task;
+END_VAR
+VAR
+	i : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Target = 0 THEN
+	LogError('Input is null');
+	RETURN;
+END_IF
+
+FOR i := 1 TO _count DO 
+	IF _items[i] = 0 THEN
+		LogError('Attempted to check a null reference');
+		CONTINUE;
+	END_IF	
+
+	IF target = _items[i] THEN
+		Contains := TRUE;
+		RETURN;
+	END_IF
+END_FOR
+
+Contains := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Count" Id="{75d6a0a8-9021-4ce4-b9e3-682c824b80b7}">
+      <Declaration><![CDATA[PROPERTY Count : UINT]]></Declaration>
+      <Get Name="Get" Id="{242c9b35-b344-48db-b8ab-eda76a0aaf30}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Count := _count;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Enqueue" Id="{47c87965-abd4-46cd-8bea-8120e283a101}">
+      <Declaration><![CDATA[METHOD PUBLIC Enqueue : BOOL
+VAR_INPUT
+    newTask : I_Task;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _count >= QUEUE_SIZE THEN
+    RETURN;
+
+END_IF
+
+_items[_count + 1] := newTask;
+_count := _count + 1;
+
+Enqueue := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryDequeue" Id="{8dc28c53-1d00-4be3-9146-f51da6ca8b6f}">
+      <Declaration><![CDATA[METHOD PUBLIC TryDequeue : BOOL
+VAR_OUTPUT
+    result : I_Task;
+END_VAR
+VAR
+    target : I_Task;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _count < 1 THEN
+    RETURN;
+END_IF
+
+target := _items[1];
+_count := _count - 1;
+
+MEMMOVE(ADR(_items[1]), ADR(_items[2]), SIZEOF(_items) - SIZEOF(_items[1]));
+
+result := target;
+TryDequeue := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="T_TaskQueue">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TaskQueue.Clear">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TaskQueue.Contains">
+      <LineId Id="3" Count="16" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TaskQueue.Count.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TaskQueue.Enqueue">
+      <LineId Id="3" Count="7" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="T_TaskQueue.TryDequeue">
+      <LineId Id="3" Count="10" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

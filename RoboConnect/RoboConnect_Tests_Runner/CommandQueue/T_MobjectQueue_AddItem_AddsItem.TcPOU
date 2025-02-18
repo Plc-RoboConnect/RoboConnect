@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="T_MobjectQueue_AddItem_AddsItem" Id="{5d9a6006-e93c-407c-bc1a-e901a602b81a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_MobjectQueue_AddItem_AddsItem EXTENDS T_UnitTestBase
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	Queue : Queue;
+	queueLength : DINT;
+	item : INT := 1;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Queue.AddItem(item);
+queueLength := Queue.Count;
+TestFinished();]]></ST>
+    </Implementation>
+    <LineIds Name="T_MobjectQueue_AddItem_AddsItem">
+      <LineId Id="9" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

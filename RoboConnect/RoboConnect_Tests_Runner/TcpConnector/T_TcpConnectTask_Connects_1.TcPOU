@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="T_TcpConnectTask_Connects_1" Id="{4aebc26f-f607-4a8a-b85a-ee792bbd9377}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK T_TcpConnectTask_Connects_1 EXTENDS T_UnitTestBase
+VAR
+  ip : T_IPv4Addr;
+  port : UINT;
+  connectTask : T_SocketConnectTask;
+  resultTask : I_Task;
+  myTestState, prevState : (ARRANGE, ACT, ASSERT);
+  
+  actual, expected : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE myTestState OF
+  ARRANGE:
+    ip := '127.0.0.1';
+    port := 5000;
+
+  ACT:
+    connectTask.Execute(ip, port);
+    
+    // Cycles
+    connectTask.CyclicLogic();
+    connectTask.CyclicLogic();
+    connectTask.CyclicLogic();
+    
+    IF resultTask.Done THEN
+      state := ARRANGE;
+		END_IF
+
+  ASSERT:
+    actual := resultTask.Done;
+    assertion.AssertEquals_BOOL(expected, actual, 'Task.Done = TRUE');
+    myTestState := ARRANGE;
+    TestFinished();
+
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="T_TcpConnectTask_Connects_1">
+      <LineId Id="47" Count="6" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="54" Count="4" />
+      <LineId Id="67" Count="1" />
+      <LineId Id="59" Count="6" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
