@@ -1,5 +1,5 @@
 site_name: RoboConnect
-site_url: https://example.com/
+site_url: https://github.com/plc-roboconnect
 nav:
   - Home: index.md
   - 'Getting Started':
@@ -70,5 +70,5 @@ theme:
 markdown_extensions:
   - attr_list
   - md_in_html
-repo_url: https://github.com/squidfunk/mkdocs-material
+repo_url: https://github.com/plc-roboconnect/roboconnect
 repo_name: RoboConnect Library

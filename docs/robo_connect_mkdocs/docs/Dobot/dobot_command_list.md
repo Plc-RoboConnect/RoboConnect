@@ -1,4 +1,6 @@
-The TCP/IP control is based off of strings, these are held in an enum. When the developer wants to use one of these commands they revernce the enumeration. 
+The TCP/IP control is based on strings, these are held in an enum. When the developer wants to use one of these commands they reference the enumeration. 
+
+*The command list below is not currently accurate - the RoboConnect.Dobot library is the source of truth.*
 
 ## Control Commands
 
