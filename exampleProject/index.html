@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://github.com/plc-roboconnect/exampleProject/">
       
       
-        <link rel="prev" href="..">
+        <link rel="prev" href="../getting_started/">
       
       
         <link rel="next" href="../design_guide/">
@@ -249,7 +249,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../getting_started.md" class="md-tabs__link">
+        <a href="../getting_started/" class="md-tabs__link">
           
   
   Getting Started
@@ -456,7 +456,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../getting_started.md" class="md-nav__link">
+      <a href="../getting_started/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -484,18 +484,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Example Project
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -507,92 +497,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#intro" class="md-nav__link">
-    <span class="md-ellipsis">
-      Intro
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#program" class="md-nav__link">
-    <span class="md-ellipsis">
-      Program
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Usage
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#explanation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Explanation
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Explanation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#set-up-configuring" class="md-nav__link">
-    <span class="md-ellipsis">
-      Set Up &amp; Configuring
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#connecting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Connecting
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-the-trajectory" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running The Trajectory
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -1131,83 +1035,8 @@
   
   
   
+    
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#intro" class="md-nav__link">
-    <span class="md-ellipsis">
-      Intro
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#program" class="md-nav__link">
-    <span class="md-ellipsis">
-      Program
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Usage
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#explanation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Explanation
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Explanation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#set-up-configuring" class="md-nav__link">
-    <span class="md-ellipsis">
-      Set Up &amp; Configuring
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#connecting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Connecting
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-the-trajectory" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running The Trajectory
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -1226,13 +1055,16 @@
   
 
 
-  <h1>Example Project</h1>
-
-<h2 id="intro">Intro</h2>
-<p>In this exaple we set up and use a robot for a pick and place sequnece. The two robots we have as an example are the Dobot Nova 5 and Dobot Mg400. We use both robots agnostically by assigning RoboConnect to either one of the implemented examples. </p>
-<h2 id="program">Program</h2>
-<p>In the program there is a simple state machine to initialise connect and start out pick and place sequence. After the sequence is completed we can disable and disconnect from the robot. The program also comes with a small HMI for operation. </p>
-<p><a class="glightbox" href="../images/RoboConnectExampleHMI.JPG" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Hmi" src="../images/RoboConnectExampleHMI.JPG" /></a></p>
+<h1 id="intro">Intro</h1>
+<p>In this example we set up and use robo connect for a pick and place sequence. </p>
+<p>We have two implementations of RoboConnect, for a six axis arm, and for a 4 axis robot, where the 4th axis is always parallel with the base. As both are abstracted by RoboConnect, we are reusing the same application logic.</p>
+<h1 id="program">Program</h1>
+<p>In the program there is a simple state machine to initialise, connect and start the pick and place sequence. After the sequence is completed we can disable and disconnect from the robot. </p>
+<h2 id="setup">Setup</h2>
+<p>With all RoboConnect applications, the concrete instance of the robot control must first be instantiated and configured. This is then passed to an I_RoboConnect interface where it can then be used generically. Below shows the steps for our trivial example.</p>
+<p><a class="glightbox" href="../images/example_code_actions.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Example code setup" src="../images/example_code_actions.png" /></a></p>
+<p>The program also comes with a small HMI for operation. </p>
+<p><a class="glightbox" href="../images/RoboConnectExampleHMI.JPG" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="HMI" src="../images/RoboConnectExampleHMI.JPG" /></a></p>
 <p>In the HMI there is command buttons for connecting, starting the sequence, disabling and disconnecting. With feedback for cartesian positions and joint positions. Below is an event logger for the program.</p>
 <h2 id="usage">Usage</h2>
 <p>To use the program, first decide whether the Mg400 or the Nova 5 is your target robot. Comment out the ip address of the robot you are <strong>not</strong> using. Then activate the configuration and open the HMI. Normal operation would involve, connecting and starting the sequence. After starting the seuqnce the robot will enable, move to pick and cycle through the pick and place trajectory. </p>

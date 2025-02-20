@@ -17,6 +17,10 @@
          <lastmod>2025-02-20</lastmod>
     </url>
     <url>
+         <loc>https://github.com/plc-roboconnect/getting_started/</loc>
+         <lastmod>2025-02-20</lastmod>
+    </url>
+    <url>
          <loc>https://github.com/plc-roboconnect/manufacturer-adding-support-for-robot/</loc>
          <lastmod>2025-02-20</lastmod>
     </url>
@@ -110,10 +114,6 @@
     </url>
     <url>
          <loc>https://github.com/plc-roboconnect/Unival/unival-inherited-properties/</loc>
-         <lastmod>2025-02-20</lastmod>
-    </url>
-    <url>
-         <loc>https://github.com/plc-roboconnect/images/getting_started/</loc>
          <lastmod>2025-02-20</lastmod>
     </url>
 </urlset>
