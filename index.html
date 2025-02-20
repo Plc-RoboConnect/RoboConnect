@@ -12,7 +12,7 @@
       
       
       
-        <link rel="next" href="getting_started/">
+        <link rel="next" href="exampleProject/">
       
       
       <link rel="icon" href="assets/images/favicon.png">
@@ -83,7 +83,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#twincat-robot-library" class="md-skip">
+        <a href="#roboconnect" class="md-skip">
           Skip to content
         </a>
       
@@ -247,7 +247,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="getting_started/" class="md-tabs__link">
+        <a href="getting_started.md" class="md-tabs__link">
           
   
   Getting Started
@@ -398,6 +398,18 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="." class="md-nav__link md-nav__link--active">
         
   
@@ -408,6 +420,70 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#simplifying-integration-of-robotics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simplifying Integration of Robotics.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#one-abstraction-many-robots" class="md-nav__link">
+    <span class="md-ellipsis">
+      One Abstraction, Many Robots
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maximising-reuse-of-application-code-minimising-special-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maximising Reuse of application code, minimising "special" code.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#challenges-with-diverse-robot-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Challenges with Diverse Robot APIs:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benefits-of-a-common-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      Benefits of a Common Interface:
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -463,7 +539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="getting_started/" class="md-nav__link">
+      <a href="getting_started.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1037,6 +1113,59 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#simplifying-integration-of-robotics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simplifying Integration of Robotics.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#one-abstraction-many-robots" class="md-nav__link">
+    <span class="md-ellipsis">
+      One Abstraction, Many Robots
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maximising-reuse-of-application-code-minimising-special-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maximising Reuse of application code, minimising "special" code.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#challenges-with-diverse-robot-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Challenges with Diverse Robot APIs:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benefits-of-a-common-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      Benefits of a Common Interface:
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1056,9 +1185,36 @@
   
 
 
-<h1 id="twincat-robot-library">TwinCAT Robot Library</h1>
-<p>A manufacturer and model agnostic library providing generic robot control functionality for TwinCAT users.</p>
-<p><a class="md-button md-button--primary" href="getting_started/">Get Started </a> <a class="md-button" href="https://github.com/plc-roboconnect">Go to GitHub </a></p>
+<h1 id="roboconnect">RoboConnect</h1>
+<p>RoboConnect is an un-opinoinated, robot abstration layer for TwinCAT.</p>
+<p><a class="md-button md-button--primary" href="getting_started.md">Get Started </a> <a class="md-button" href="https://github.com/plc-roboconnect">Go to GitHub </a></p>
+<h2 id="simplifying-integration-of-robotics">Simplifying Integration of Robotics.</h2>
+<p>It is a generic library providing robot functionality to TwinCAT (TC) users. It simplifies integration of any robot into the TwinCAT system by providing a common set of functionalities to PLC developers. It is designed to be familiar to users of Beckhoff’s Motion library, TC_MC2, but can also be used with Object Oriented Programming (OOP) techniques.</p>
+<p>RoboConnect is an open-source library, available on an MIT license, meaning it can be used and modified without consent or attribution. </p>
+<p>There is no requirement for users of RoboConnect to make their libraries open source or freely available. HOwever, if you users are making a new connectivity library for a particular robot brand &amp; model, it will help the community grow to make this open source, either through the RoboConnect organisation's <a href="https://github.com/plc-roboconnect">GitHub</a>, or through their own public repo.</p>
+<h2 id="one-abstraction-many-robots">One Abstraction, Many Robots</h2>
+<p>RoboConnect is an abstraction layer. It does not offer any out-of-the box kinematics. RoboConnect does not natively handle kinematics. It is designed to be an abstraction around robot controllers, such that one robot controller can be switched for another, with no change to the PLC code required to control it (if the degrees of freedom, reach and load capabilities match).
+RoboConnect can be used with robots of any given form, from two axes upwards. </p>
+<p>It provides functionality to move robots in joint or cartesian space but does not place limitations on the degrees of freedom, or the shape and relationship of the kinematic chain. RoboConnect does not provide the kinematic solutions, they are delegated to something else. Typically, this will be a dedicated robot controller, but it could also be a cartesian or delta robot running directly on the Beckhoff NC, an XY gantry or anything else in between. </p>
+<p><a class="glightbox" href="images/roboconnect-dobot-connection.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="robo connect to dobot" src="images/roboconnect-dobot-connection.png" width="600" /></a></p>
+<h2 id="maximising-reuse-of-application-code-minimising-special-code">Maximising Reuse of application code, minimising "special" code.</h2>
+<p>Commonly in projects with robot integrations, a custom interface is derived between PLC and robot, with a mechanism for requesting certain jobs and perhaps passing data for a job and receiving results forming part of the interface. RoboConnect aims to move beyond this, giving end users the ability to write their application code in a familiar way within the PLC, then reuse that functionality against any robot supporting the interface.</p>
+<p><a class="glightbox" href="images/roboconnect-multi-robots.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="one application, any robot" src="images/roboconnect-multi-robots.png" width="width" /></a></p>
+<h2 id="challenges-with-diverse-robot-apis">Challenges with Diverse Robot APIs:</h2>
+<ul>
+<li>Varied Commands &amp; Protocols: Necessitates constant adaptation, increasing the learning curve.</li>
+<li>Increased Development Time: Each unique API extends the timeline for integration and deployment.</li>
+<li>Complex Maintenance: Independent API evolutions complicate updates and system maintenance.</li>
+<li>Integration Difficulties: Makes it challenging to integrate and manage multiple robotic systems.</li>
+</ul>
+<h2 id="benefits-of-a-common-interface">Benefits of a Common Interface:</h2>
+<ul>
+<li>Uniform Command Set: Simplifies development with standardised interactions.</li>
+<li>Code Reusability &amp; Maintenance: Reduces repetitive coding and simplifies updates.</li>
+<li>Accelerated Deployment: Streamlines the integration process, shortening development cycles.</li>
+<li>Enhanced Scalability: Facilitates simplified addition and integration of new robots.</li>
+<li>Focus on Innovation: Frees resources to improve and innovate on robotic functionalities.</li>
+</ul>
 
 
 
