@@ -53,7 +53,7 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to system preference
-  logo: 'logo\robot 1.png' # Beckhoff logo
+  logo: 'logo/robot 1.png' # Beckhoff logo
   #logo: 'images/beckhoff_logo_nat_red_a4.png' #Beckhoff transparent logo
   features:
     - navigation.tabs

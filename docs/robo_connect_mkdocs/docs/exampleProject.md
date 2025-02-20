@@ -1,12 +1,22 @@
-## Intro 
+# Intro 
 
-In this exaple we set up and use a robot for a pick and place sequnece. The two robots we have as an example are the Dobot Nova 5 and Dobot Mg400. We use both robots agnostically by assigning RoboConnect to either one of the implemented examples. 
+In this example we set up and use robo connect for a pick and place sequence. 
 
-## Program 
+We have two implementations of RoboConnect, for a six axis arm, and for a 4 axis robot, where the 4th axis is always parallel with the base. As both are abstracted by RoboConnect, we are reusing the same application logic.
 
-In the program there is a simple state machine to initialise connect and start out pick and place sequence. After the sequence is completed we can disable and disconnect from the robot. The program also comes with a small HMI for operation. 
 
-![Hmi](../images/RoboConnectExampleHMI.JPG)
+# Program 
+
+In the program there is a simple state machine to initialise, connect and start the pick and place sequence. After the sequence is completed we can disable and disconnect from the robot. 
+
+## Setup
+With all RoboConnect applications, the concrete instance of the robot control must first be instantiated and configured. This is then passed to an I_RoboConnect interface where it can then be used generically. Below shows the steps for our trivial example.
+
+![Example code setup](images/example_code_actions.png)
+
+The program also comes with a small HMI for operation. 
+
+![HMI](images/RoboConnectExampleHMI.JPG)
 
 In the HMI there is command buttons for connecting, starting the sequence, disabling and disconnecting. With feedback for cartesian positions and joint positions. Below is an event logger for the program.
 

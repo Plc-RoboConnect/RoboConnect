@@ -6,9 +6,11 @@ hide:
 
 # RoboConnect 
 
-RoboConnect is an un-opinoinated, robot abstration layer for TwinCAT.
+RoboConnect is an un-opinionated, robot abstration layer for TwinCAT.
 
-[Get Started ](getting_started.md){ .md-button .md-button--primary } [Go to GitHub ](https://github.com/plc-roboconnect){ .md-button }
+[Get Started](getting_started.md){ .md-button .md-button--primary } 
+[Example Project](exampleProject.md){ .md-button .md-button--primary } 
+[Go to GitHub](https://github.com/plc-roboconnect){ .md-button }
 
 ## Simplifying Integration of Robotics.
 It is a generic library providing robot functionality to TwinCAT (TC) users. It simplifies integration of any robot into the TwinCAT system by providing a common set of functionalities to PLC developers. It is designed to be familiar to users of Beckhoff’s Motion library, TC_MC2, but can also be used with Object Oriented Programming (OOP) techniques.

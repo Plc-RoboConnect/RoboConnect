@@ -9,22 +9,22 @@ For general TwinCAT and Beckhoff Product support, please contact your local [Bec
 
 ## Adding this repo as a TwinCAT PLC Library Repository
 
-1) Clone this repository to your PC
+1. Clone this repository to your PC
 
-2) Open the Library Repository
+2. Open the Library Repository
 
 ![Image title](images/setup/1_add_library.png){ align=none, loading=lazy }
 
-3) Click Edit Locations...
+3. Click Edit Locations...
 
 ![Image title](images/setup/2_edit_locations.png){ align=none, loading=lazy }
 
-4) Click Add...
+4. Click Add...
 
 ![Image title](images/setup/3_add.png){ align=none, loading=lazy }
 
-5) Browse to the folder where you cloned this repository and give the PLC Library Repository a name (e.g. RoboConnect Libraries). NOTE The location MUST point to the \Library Repository folder under the repo root!
+5. Browse to the folder where you cloned this repository and give the PLC Library Repository a name (e.g. RoboConnect Libraries). NOTE The location MUST point to the \Library Repository folder under the repo root!
 
 ![Image title](images/setup/4_browse.png){ align=none, loading=lazy }
 
-6) Future updates to the RoboConnect libraries will automatically propogate into TwinCAT XAE by fetching this repo.
+6. Future updates to the RoboConnect libraries will automatically propogate into TwinCAT XAE by fetching this repo.
